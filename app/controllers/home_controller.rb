@@ -7,7 +7,8 @@ class HomeController < ApplicationController
   end
 
   def authenticate
-    authenticate_with_google
+    @auth_result = authenticate_with_google
+    redirect_to @auth_result
   end
 
   private
@@ -25,8 +26,6 @@ class HomeController < ApplicationController
     client.authorization.redirect_uri = 'http://lvh.me:3000/oauth2callback/index'
     client.authorization.scope = 'https://www.googleapis.com/auth/plus.me'
 
-    redirect_uri = Signet::OAuth2.generate_authorization_uri(client.authorization.authorization_uri)
-    @auth_result = redirect_uri
-    redirect_to @auth_result
+    Signet::OAuth2.generate_authorization_uri(client.authorization.authorization_uri)
   end
 end
