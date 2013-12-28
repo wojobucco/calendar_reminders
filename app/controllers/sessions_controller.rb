@@ -1,6 +1,3 @@
-require 'base64'
-require 'json'
-
 class SessionsController < ApplicationController
 
   def new
@@ -19,6 +16,11 @@ class SessionsController < ApplicationController
         user.name = result.data.name
         user.email = result.data.email
         user.refresh_token = client.authorization.refresh_token
+      end
+
+      if (found_user.refresh_token != client.authorization.refresh_token)
+        found_user.update(refresh_token: client.authorization.refresh_token)
+        found_user.save
       end
 
       session['user_id'] = found_user.id
