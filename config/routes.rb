@@ -1,8 +1,9 @@
 CalendarReminders::Application.routes.draw do
   get "home/index"
-  post "home/authenticate"
 
-  get "oauth2callback/index"
+  resources :sessions
+
+  delete "sessions/destroy"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
