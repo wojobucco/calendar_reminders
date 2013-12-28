@@ -15,12 +15,13 @@ class SessionsController < ApplicationController
         :authorization => client.authorization
       )
 
-      user = User.create(
-        email: result.data.email,
-        refresh_token: client.authorization.refresh_token
-      )
+      found_user = User.find_or_create_by(google_id: result.data.id) do |user|
+        user.name = result.data.name
+        user.email = result.data.email
+        user.refresh_token = client.authorization.refresh_token
+      end
 
-      session['user_id'] = user.id
+      session['user_id'] = found_user.id
 
       redirect_to root_path
     else
@@ -46,7 +47,10 @@ class SessionsController < ApplicationController
     client.authorization.client_id = '689299727081-pvre0jugh5l6cfg2l5e18us4msu8udom.apps.googleusercontent.com'
     client.authorization.client_secret = 'pI8RdUmDmbUloV1pZnR_rPm4'
     client.authorization.redirect_uri = new_session_url
-    client.authorization.scope = 'email'
+    client.authorization.scope = [
+      'https://www.googleapis.com/auth/userinfo.email', 
+      'https://www.googleapis.com/auth/userinfo.profile'
+      ]
 
     return client
   end
