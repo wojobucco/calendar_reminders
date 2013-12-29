@@ -34,6 +34,8 @@ end
 
 gem 'google-api-client'
 
+gem 'httparty'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

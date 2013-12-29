@@ -1,3 +1,4 @@
+
 class SessionsController < ApplicationController
 
   def new
@@ -24,6 +25,7 @@ class SessionsController < ApplicationController
       end
 
       session['user_id'] = found_user.id
+      session['access_token'] = client.authorization.access_token
 
       redirect_to root_path
     else
@@ -32,6 +34,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    revoke_response = HTTParty.get "https://accounts.google.com/o/oauth2/revoke?token=#{session['access_token']}"
+
     reset_session
     redirect_to root_path
   end
@@ -45,7 +49,6 @@ class SessionsController < ApplicationController
       application_version: '0.0.1')
 
     # Initialize OAuth 2.0 client    
-    client.authorization = :oauth_2
     client.authorization.client_id = '689299727081-pvre0jugh5l6cfg2l5e18us4msu8udom.apps.googleusercontent.com'
     client.authorization.client_secret = 'pI8RdUmDmbUloV1pZnR_rPm4'
     client.authorization.redirect_uri = new_session_url
