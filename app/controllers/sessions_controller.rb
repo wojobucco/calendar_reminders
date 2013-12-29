@@ -44,6 +44,10 @@ class SessionsController < ApplicationController
   def destroy
     revoke_response = HTTParty.get "https://accounts.google.com/o/oauth2/revoke?token=#{session['access_token']}"
 
+    current_user = User.find(session['user_id'])
+    current_user.update(refresh_token: nil)
+    current_user.save
+
     reset_session
     redirect_to root_path
   end
