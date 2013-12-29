@@ -1,4 +1,3 @@
-
 class SessionsController < ApplicationController
 
   def new
@@ -27,6 +26,9 @@ class SessionsController < ApplicationController
       session['user_id'] = found_user.id
       session['access_token'] = client.authorization.access_token
 
+      redirect_to root_path
+    elsif params[:error]
+      flash[:notice] = params[:error]
       redirect_to root_path
     else
       redirect_to auth_request_uri
