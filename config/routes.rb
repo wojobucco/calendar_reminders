@@ -1,8 +1,8 @@
 CalendarReminders::Application.routes.draw do
   get "home/index"
 
-  resources :sessions
-
+  get "sessions/new"
+  get "sessions/authorize"
   delete "sessions/destroy"
 
   # The priority is based upon order of creation: first created -> highest priority.
