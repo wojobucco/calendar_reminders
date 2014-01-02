@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
       found_user = User.find_or_create_by(google_id: result.data.id) do |user|
         user.name = result.data.name
         user.email = result.data.email
-        user.refresh_token = client.authorization.refresh_token
+        user.refresh_token = @client.authorization.refresh_token
       end
 
       if (found_user.refresh_token != @client.authorization.refresh_token)

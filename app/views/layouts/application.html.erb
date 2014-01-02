@@ -7,9 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div id="top_nav">
-    <%= link_to "Home", root_path %>
-  </div>
+  <nav class="navbar navbar-default" role="navigation">
+    <ul class="nav navbar-nav">
+      <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "How it works", root_path %></li>
+      <li><%= link_to "Company", root_path %></li>
+    </ul>
+  </nav>
   <div id="auth">
     <% if current_user %>
       Hello <%= current_user.email %> | <%= link_to "Sign out", sessions_destroy_path, {method: 'delete' } %>
@@ -22,7 +26,19 @@
       <p><%= message %></p> 
     <% end %>
   </div>
-<%= yield %>
-
+  <div id="content" class="container bs-docs-container">
+    <!-- Here goes the individual page content -->
+    <%= yield %>
+  </div>
+  <footer class="container">
+    <div>
+      <p>Copyright 2013 - 2014 (c) | Jonathan Worek</p>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <p>Calendar reminders v 0.0.1</p>
+      </ul>
+    </div>
+  </footer>
 </body>
 </html>
