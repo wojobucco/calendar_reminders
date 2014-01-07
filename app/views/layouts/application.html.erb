@@ -6,14 +6,25 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="container">
+  <h1>Calendar Reminders</h1>
   <nav class="navbar navbar-default" role="navigation">
     <ul class="nav navbar-nav">
       <li><%= link_to "Home", root_path %></li>
       <li><%= link_to "How it works", root_path %></li>
       <li><%= link_to "Company", root_path %></li>
+      <li><%= link_to "Contact", root_path %></li>
     </ul>
   </nav>
+  <div id="messages">
+    <% flash.each do |message| %>
+      <p><%= message %></p>
+    <% end %>
+  </div>
+  <div id="content" class="hero-unit">
+    <!-- Here goes the individual page content -->
+    <%= yield %>
+  </div>
   <div id="auth">
     <% if current_user %>
       Hello <%= current_user.email %> | <%= link_to "Sign out", sessions_destroy_path, {method: 'delete' } %>
@@ -21,16 +32,7 @@
       <%= link_to image_tag('google/Red-signin-Long-base-44dp.png'), sessions_new_path %>
     <% end %>
   </div>
-  <div id="messages">
-    <% flash.each do |message| %>
-      <p><%= message %></p> 
-    <% end %>
-  </div>
-  <div id="content" class="container bs-docs-container">
-    <!-- Here goes the individual page content -->
-    <%= yield %>
-  </div>
-  <footer class="container">
+  <footer>
     <div>
       <p>Copyright 2013 - 2014 (c) | Jonathan Worek</p>
     </div>
@@ -40,5 +42,6 @@
       </ul>
     </div>
   </footer>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 </body>
 </html>
