@@ -7,41 +7,39 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="container">
-  <h1>Calendar Reminders</h1>
-  <nav class="navbar navbar-default" role="navigation">
-    <ul class="nav navbar-nav">
-      <li><%= link_to "Home", root_path %></li>
-      <li><%= link_to "How it works", root_path %></li>
-      <li><%= link_to "Company", root_path %></li>
-      <li><%= link_to "Contact", root_path %></li>
-    </ul>
-  </nav>
+  <header>
+    <nav class="navbar navbar-default" role="navigation">
+      <ul class="nav navbar-nav">
+        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "Company", "info/about" %></li>
+        <li><%= link_to "Contact", "info/contact" %></li>
+      </ul>
+      <div id="auth">
+        <% if current_user %>
+          Hello <%= current_user.email %> | <%= link_to "Sign out", sessions_destroy_path, {method: 'delete' } %>
+        <% else %>
+          <ul class="nav navbar-nav">
+            <li><%= link_to "Sign in", "authentication/index" %></li>
+            <li><%= link_to "Sign up", "authentication/index" %></li>
+          </ul>
+        <% end %>
+      </div>
+    </nav>
+  </header>
   <div id="messages">
     <% flash.each do |message| %>
       <p><%= message %></p>
     <% end %>
   </div>
-  <div id="content" class="hero-unit">
+  <div id="content">
     <!-- Here goes the individual page content -->
     <%= yield %>
   </div>
-  <div id="auth">
-    <% if current_user %>
-      Hello <%= current_user.email %> | <%= link_to "Sign out", sessions_destroy_path, {method: 'delete' } %>
-    <% else %>
-      <%= link_to image_tag('google/Red-signin-Long-base-44dp.png'), sessions_new_path %>
-    <% end %>
-  </div>
   <footer>
-    <div>
-      <p>Copyright 2013 - 2014 (c) | Jonathan Worek</p>
-    </div>
-    <div>
-      <ul class="nav navbar-nav">
-        <p>Calendar reminders v 0.0.1</p>
-      </ul>
-    </div>
+    <p>Copyright 2013 - 2014 (c) | Jonathan Worek</p>
+    <p>Calendar reminders v 0.0.1</p>
   </footer>
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
 </html>

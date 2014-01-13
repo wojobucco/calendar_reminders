@@ -37,3 +37,5 @@ gem 'google-api-client'
 gem 'httparty'
 
 gem 'bootstrap-sass'
+
+gem 'rspec-rails'

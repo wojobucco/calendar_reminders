@@ -1,4 +1,7 @@
 CalendarReminders::Application.routes.draw do
+  get "authentication/index"
+  get "info/about"
+  get "info/contact"
   get "home/index"
 
   get "sessions/new"
