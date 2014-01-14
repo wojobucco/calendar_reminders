@@ -14,15 +14,16 @@
         <li><%= link_to "Company", "info/about" %></li>
         <li><%= link_to "Contact", "info/contact" %></li>
       </ul>
-      <div id="auth">
-        <% if current_user %>
-          Hello <%= current_user.email %> | <%= link_to "Sign out", sessions_destroy_path, {method: 'delete' } %>
-        <% else %>
-          <ul class="nav navbar-nav">
-            <li><%= link_to "Sign in", "authentication/index" %></li>
-            <li><%= link_to "Sign up", "authentication/index" %></li>
-          </ul>
-        <% end %>
+      <div id="auth" class="pull-right">
+        <ul class="nav navbar-nav">
+          <% if current_user %>
+            <li><%= link_to_function "Profile", "alert('profile')" %></li> 
+            <li><%= link_to "Sign out", sessions_destroy_path, {method: 'delete' } %></li>
+          <% else %>
+            <li><%= link_to_function "Sign in", "$('#myModal').modal()" %></li>
+            <li><%= link_to_function "Register", "$('#myModal').modal()" %></li>
+          <% end %>
+        </ul>
       </div>
     </nav>
   </header>
@@ -33,9 +34,13 @@
   </div>
   <div id="content">
     <!-- Here goes the individual page content -->
+    <% unless current_user.nil? %>
+      <p class="pull-right">Hello <%= current_user.email %></p>
+    <% end %>
+    <%= render 'home/auth' %>
     <%= yield %>
   </div>
-  <footer>
+  <footer class="text-center">
     <p>Copyright 2013 - 2014 (c) | Jonathan Worek</p>
     <p>Calendar reminders v 0.0.1</p>
   </footer>
