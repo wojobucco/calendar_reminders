@@ -1,4 +1,5 @@
 CalendarReminders::Application.routes.draw do
+  resources :profile
   get "authentication/index"
   get "info/about"
   get "info/contact"

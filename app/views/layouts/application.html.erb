@@ -7,17 +7,21 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="container">
+  <% unless current_user.nil? %>
+    <h4 class="pull-right">Hello, <%= current_user.name %></h4>
+  <% end %>
   <header>
+    <h4>Calendar Reminders</h4>
     <nav class="navbar navbar-default" role="navigation">
       <ul class="nav navbar-nav">
         <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Company", "info/about" %></li>
-        <li><%= link_to "Contact", "info/contact" %></li>
+        <li><%= link_to "Company", "#{root_url}info/about" %></li>
+        <li><%= link_to "Contact", "#{root_url}info/contact" %></li>
       </ul>
       <div id="auth" class="pull-right">
         <ul class="nav navbar-nav">
           <% if current_user %>
-            <li><%= link_to_function "Profile", "alert('profile')" %></li> 
+            <li><%= link_to "Profile", "#{root_url}profile/#{current_user.id}" %></li> 
             <li><%= link_to "Sign out", sessions_destroy_path, {method: 'delete' } %></li>
           <% else %>
             <li><%= link_to_function "Sign in", "$('#myModal').modal()" %></li>
@@ -34,15 +38,12 @@
   </div>
   <div id="content">
     <!-- Here goes the individual page content -->
-    <% unless current_user.nil? %>
-      <p class="pull-right">Hello <%= current_user.email %></p>
-    <% end %>
     <%= render 'home/auth' %>
     <%= yield %>
   </div>
   <footer class="text-center">
     <p>Copyright 2013 - 2014 (c) | Jonathan Worek</p>
-    <p>Calendar reminders v 0.0.1</p>
+    <p>Calendar Reminders v 0.0.1</p>
   </footer>
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
