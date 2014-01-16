@@ -1,4 +1,5 @@
 CalendarReminders::Application.routes.draw do
+  get "appointments", to: "appointments#index"
   resources :profile
   get "authentication/index"
   get "info/about"
