@@ -44,7 +44,11 @@
       </ul>
     </div>
   <% end %>
-  <div id="content" class="col-md-10">
+  <% if current_user %>
+    <div id="content" class="col-md-10">
+  <% else %>
+    <div id="content" class="col-md-12">
+  <% end %>
     <!-- Here goes the individual page content -->
     <%= render 'home/auth' %>
     <%= yield %>
