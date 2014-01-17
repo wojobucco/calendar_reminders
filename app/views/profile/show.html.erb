@@ -1,0 +1,6 @@
+<h1>User profile</h1>
+<ul>
+  <% @user.attributes.each do |key, value| %>
+    <li><%= "#{key.to_s} : #{value.to_s}" %></li>
+  <% end %>
+</ul>

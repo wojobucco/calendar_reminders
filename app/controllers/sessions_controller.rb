@@ -3,7 +3,8 @@ class SessionsController < ApplicationController
   def new
     @client.authorization.scope = [
       'https://www.googleapis.com/auth/userinfo.email', 
-      'https://www.googleapis.com/auth/userinfo.profile'
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/calendar.readonly'
       ]
 
     redirect_to auth_request_uri
@@ -16,9 +17,8 @@ class SessionsController < ApplicationController
 
       oauth2 = @client.discovered_api 'oauth2'
       result = @client.execute(
-        :api_method => oauth2.userinfo.get,
-        :authorization => @client.authorization
-      )
+        :api_method => oauth2.userinfo.get
+        )
 
       found_user = User.find_or_create_by(google_id: result.data.id) do |user|
         user.name = result.data.name
