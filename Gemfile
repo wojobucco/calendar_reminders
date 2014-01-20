@@ -39,3 +39,4 @@ gem 'httparty'
 gem 'bootstrap-sass'
 
 gem 'rspec-rails'
+

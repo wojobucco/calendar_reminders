@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Calendar Reminders</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -55,8 +56,8 @@
   </div>
   <footer class="text-center">
     <small>
-      <p>Copyright 2013 - 2014 (c) | Jonathan Worek</p>
-      <p>Calendar Reminders v 0.0.1</p>
+      <p>Copyright 2013 - <%= Time.now.year %> (c) | Jonathan Worek<br/>
+      Calendar Reminders v 0.0.1</p>
     </small>
   </footer>
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
