@@ -1,4 +1,4 @@
-require_relative 'google_api'
+require_relative '../services/google_api'
 
 class Event
 
