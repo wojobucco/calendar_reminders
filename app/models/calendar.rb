@@ -1,20 +1,13 @@
-require_relative '../services/google_api'
-
 class Calendar
+  class << self
+    attr_accessor :api_client
 
-  def initialize(api_client)
-    @api_client = api_client
-  end
+    def initialize
+      @api_client = GoogleApi.new(nil)
+    end
 
-  def find_all_calendars
-    service = @api_client.discovered_api 'calendar', 'v3'
-    @api_client.authorization.access_token = session['access_token']
-    result = @api_client.execute(
-      :api_method => service.calendar_list.get,
-      :parameters => { 'calendarId' => nil },
-      :authorization => @api_client.authorization
-      )
-
-    return result.data
+    def find_all_calendars
+      @api_client.get_all_calendars
+    end
   end
 end
