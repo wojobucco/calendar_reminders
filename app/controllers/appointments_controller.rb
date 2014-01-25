@@ -11,7 +11,7 @@ class AppointmentsController < ApplicationController
     Event.api_client = client
     @events = []
 
-    @calendars.items.each do |calendar|
+    @calendars.each do |calendar|
       @events.concat Event.find_all_events_by_calendar(calendar)
     end
 
