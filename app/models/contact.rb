@@ -1,5 +1,3 @@
-require_relative '../services/google_api'
-
-class Contact
+class Contact < ActiveRecord::Base
 
 end

@@ -3,13 +3,6 @@
   <tr>
     <th>Start</th>
     <th>Summary</th>
+    <th>Client</th>
   </tr>
-  <% @events.each do |event| %>
-    <% if event['start']['dateTime'] %>
-      <tr>
-        <td><%= event['start']['dateTime'] %></td>
-        <td><%= event['summary']%></td>
-      </tr>
-    <% end %>
-  <% end %>
 </table>
