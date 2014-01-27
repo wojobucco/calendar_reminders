@@ -1,4 +1,4 @@
-class AddAppointmentsTable < ActiveRecord::Migration
+class CreateAppointments < ActiveRecord::Migration
   def change
     create_table :appointments do |t|
       t.references :user

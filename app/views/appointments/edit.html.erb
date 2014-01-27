@@ -1,0 +1,5 @@
+<h1>Edit appointment</h1>
+<%= form_tag({controller: "appointments", action: "update"}, method: "patch") %>
+  <%= render "edit_form" %>
+  <input type="submit" value="Save appointment" />
+</form>

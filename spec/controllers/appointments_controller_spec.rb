@@ -36,9 +36,9 @@ describe AppointmentsController do
         subject.stub(:current_user).and_return(mock_model(User, id: 1))
       end
 
-      it "creates a new appointment and presents it to the user" do
-        Appointment.should_receive(:new).with(user_id: 1).and_return(double(Appointment, id: 1))
+      it "responds succesfully" do
         get 'new'
+        expect(response).to be_success
       end
     end
 
@@ -88,5 +88,64 @@ describe AppointmentsController do
         delete 'destroy', id: 1
       end
     end
+  end
+
+  describe "editing an appointment" do
+
+    context "with an authenticated user" do
+      before(:each) do
+        subject.stub(:authorize)
+        subject.stub(:current_user).and_return(mock_model(User, id: 1))
+      end
+
+      it "retrieves the appointment" do
+        Appointment.should_receive(:find).with(1).and_return(stub_model(Appointment))
+
+        get 'edit', id: 1
+      end
+
+      it "assigns the @appointment instance variable" do
+        apt = stub_model(Appointment)
+        Appointment.should_receive(:find).with(1).and_return(apt)
+
+        get 'edit', id: 1
+        expect(assigns(:appointment)).to eq(apt)
+      end
+    end
+
+  end
+
+
+  describe "updating  an appointment" do
+    
+    context "with an authenticated user" do
+      before(:each) do
+        subject.stub(:authorize)
+        subject.stub(:current_user).and_return(mock_model(User, id: 1))
+      end
+
+      it "redirects to the appointments list when the appointment is saved" do
+        Appointment.stub(:find).and_return(stub_model(Appointment))
+
+        put 'update', id: 1, start_date: '1/1/2014', start_time: '12:00:00 PM', duration: '90'
+        expect(response).to redirect_to(appointments_path)
+      end
+
+      it "renders the edit form if the save was unsuccessful" do
+        apt = mock_model(Appointment).as_null_object
+        apt.should_receive(:persisted?).and_return(false)
+        Appointment.stub(:find).and_return(apt)
+
+        put 'update', id: 1, start_date: '1/1/2014', start_time: '12:00:00 PM', duration: '90'
+        expect(response).to render_template(:edit)
+      end
+
+      it "retrieves the appointment" do
+        Appointment.should_receive(:find).with(1).and_return(stub_model(Appointment))
+
+        patch 'update', id: 1
+      end
+    end
+
   end
 end

@@ -7,15 +7,12 @@ class AppointmentsController < ApplicationController
   end
 
   def new
-    @appointment = Appointment.new(user_id: current_user.id)
   end
 
   def create
-    start_str = "#{params[:start_date]} #{params[:start_time]}"
-    apt_start = Time.parse(start_str)
-    apt_end = apt_start + (params[:duration].to_i * 60)
-    
-    appointment = Appointment.create(user_id: current_user.id, start: apt_start, end: apt_end)
+    apt_params = parse_appointment_params
+    apt_params.merge!(user_id: current_user.id)
+    appointment = Appointment.create(apt_params)
 
     if (appointment.persisted?)
       flash[:success] = "Appointment saved successfully"
@@ -24,6 +21,23 @@ class AppointmentsController < ApplicationController
       flash.now[:error] = "There was a problem saving your appointment"
       render :new
     end
+  end
+
+  def update
+    apt = Appointment.find(params[:id].to_i)
+    apt.update(parse_appointment_params)
+
+    if (apt.persisted?)
+      flash[:success] = "Appointment saved successfully"
+      redirect_to appointments_path
+    else
+      flash.now[:error] = "There was a problem saving your appointment"
+      render :edit
+    end
+  end
+
+  def edit
+    @appointment = Appointment.find(params[:id].to_i)
   end
 
   def destroy
@@ -37,5 +51,20 @@ class AppointmentsController < ApplicationController
     end
 
     redirect_to appointments_path
+  end
+
+  private
+
+  def parse_appointment_params
+    start_str = "#{params[:start_date]} #{params[:start_time]}"
+    
+    begin
+      apt_start = Time.parse(start_str)
+      apt_end = apt_start + (params[:duration].to_i * 60)
+
+      return { start: apt_start, end: apt_end }
+    rescue
+      return {}
+    end
   end
 end
