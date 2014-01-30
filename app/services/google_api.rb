@@ -5,6 +5,18 @@ class GoogleApi
     @api_client = create_api_client
   end
 
+  def get_all_contacts
+    #todo: make this work
+    service = @api_client.discovered_api 'contacts', 'v3'
+    @api_client.authorization.access_token = @access_token
+    result = @api_client.execute(
+      :api_method => service.contact_list.get,
+      :authorization => @api_client.authorization
+      )
+
+    return result.data
+  end
+
   def get_all_calendars
     service = @api_client.discovered_api 'calendar', 'v3'
     @api_client.authorization.access_token = @access_token
