@@ -1,4 +1,6 @@
 CalendarReminders::Application.routes.draw do
+  resources :contacts
+
   resources "appointments"
   resources "contacts"
   resources :profile
