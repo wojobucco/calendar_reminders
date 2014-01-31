@@ -3,8 +3,7 @@ class SessionsController < ApplicationController
   def new
     @client.authorization.scope = [
       'https://www.googleapis.com/auth/userinfo.email', 
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/calendar.readonly'
+      'https://www.googleapis.com/auth/userinfo.profile'
       ]
 
     redirect_to auth_request_uri

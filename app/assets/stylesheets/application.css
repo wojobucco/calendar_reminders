@@ -12,14 +12,6 @@
  *= require_tree .
  */
 
-#content {
-  background-color: white
-}
-
 #sidebar-wrapper a {
   color: #777
-}
-
-body {
-  background-color: #CCC;
 }
