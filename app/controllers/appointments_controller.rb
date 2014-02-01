@@ -7,6 +7,7 @@ class AppointmentsController < ApplicationController
   end
 
   def new
+    @contacts = Contact.all.where(user_id: current_user.id)
   end
 
   def create
@@ -25,7 +26,11 @@ class AppointmentsController < ApplicationController
 
   def update
     apt = Appointment.find(params[:id].to_i)
-    apt.update(parse_appointment_params)
+
+    apt_params = parse_appointment_params
+    apt_params.merge!(user_id: current_user.id)
+
+    apt.update(apt_params)
 
     if (apt.persisted?)
       flash[:success] = "Appointment saved successfully"
@@ -38,6 +43,7 @@ class AppointmentsController < ApplicationController
 
   def edit
     @appointment = Appointment.find(params[:id].to_i)
+    @contacts = Contact.all.where(user_id: current_user.id)
   end
 
   def destroy

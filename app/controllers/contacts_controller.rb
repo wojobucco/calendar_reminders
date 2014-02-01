@@ -24,7 +24,7 @@ class ContactsController < ApplicationController
   # POST /contacts
   # POST /contacts.json
   def create
-    @contact = Contact.new(contact_params)
+    @contact = Contact.new(contact_params.merge(user_id: current_user.id))
 
     respond_to do |format|
       if @contact.save
@@ -41,7 +41,7 @@ class ContactsController < ApplicationController
   # PATCH/PUT /contacts/1.json
   def update
     respond_to do |format|
-      if @contact.update(contact_params)
+      if @contact.update(contact_params.merge(user_id: current_user.id))
         format.html { redirect_to contacts_url, notice: 'Contact was successfully updated.' }
         format.json { head :no_content }
       else

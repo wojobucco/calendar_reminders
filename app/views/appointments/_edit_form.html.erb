@@ -6,4 +6,8 @@
 <input type="number" name="duration" step="15" min="0" max="90" 
   value="<%= @appointment ? ((@appointment.end.to_time - @appointment.start.to_time) / 60).to_i : 60 %>" />
 <span>minutes</span>
+<p>
+  <span>Client:</span>
+  <%= select(:contact, :contact_id, @contacts.collect { |c| [c.name, c.id] }) %>
+</p>
 <br/>
