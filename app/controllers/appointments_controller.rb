@@ -3,7 +3,8 @@ class AppointmentsController < ApplicationController
   before_filter :authorize
 
   def index
-    @appointments = Appointment.where(user_id: current_user.id)
+    @appointments = Appointment.all.where(user_id: current_user.id)
+    puts 'hello'
   end
 
   def new
@@ -28,7 +29,7 @@ class AppointmentsController < ApplicationController
     apt = Appointment.find(params[:id].to_i)
 
     apt_params = parse_appointment_params
-    apt_params.merge!(user_id: current_user.id)
+    apt_params.merge!(user_id: current_user.id, contacts_id: params[:contact][:contact_id].to_i)
 
     apt.update(apt_params)
 

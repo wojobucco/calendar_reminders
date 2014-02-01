@@ -40,3 +40,4 @@ gem 'bootstrap-sass'
 
 gem 'rspec-rails'
 
+gem 'debugger-xml'
