@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20140201010627) do
     t.integer  "user_id"
     t.datetime "start"
     t.datetime "end"
-    t.integer  "contacts_id"
+    t.integer  "contact_id"
   end
 
   create_table "contacts", force: true do |t|

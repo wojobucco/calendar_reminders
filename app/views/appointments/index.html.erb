@@ -11,7 +11,7 @@
     <tr>
       <td><%= apt.start.localtime %></td>
       <td><%= apt.end.localtime %></td>
-      <td><%= apt.contacts_id %></td>
+      <td><%= apt.contact.name %></td>
       <td><%= link_to "Edit", edit_appointment_path(apt.id), :method => :get, class: "btn btn-default" %></td>
       <td><%= button_to "Delete", appointment_path(apt.id), :method => :delete, 
         confirm: "Are you sure you wish to delete this appointment?", 

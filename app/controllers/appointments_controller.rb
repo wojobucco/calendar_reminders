@@ -4,7 +4,6 @@ class AppointmentsController < ApplicationController
 
   def index
     @appointments = Appointment.all.where(user_id: current_user.id)
-    puts 'hello'
   end
 
   def new
@@ -29,7 +28,7 @@ class AppointmentsController < ApplicationController
     apt = Appointment.find(params[:id].to_i)
 
     apt_params = parse_appointment_params
-    apt_params.merge!(user_id: current_user.id, contacts_id: params[:contact][:contact_id].to_i)
+    apt_params.merge!(user_id: current_user.id)
 
     apt.update(apt_params)
 
@@ -69,7 +68,7 @@ class AppointmentsController < ApplicationController
       apt_start = Time.parse(start_str)
       apt_end = apt_start + (params[:duration].to_i * 60)
 
-      return { start: apt_start, end: apt_end }
+      return { start: apt_start, end: apt_end, contact_id: params[:contact][:contact_id] }
     rescue
       return {}
     end
