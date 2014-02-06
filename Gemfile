@@ -36,6 +36,8 @@ gem 'google-api-client'
 
 gem 'httparty'
 
+gem 'twilio-ruby'
+
 gem 'bootstrap-sass'
 
 gem 'rspec-rails'

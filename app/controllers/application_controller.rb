@@ -22,9 +22,12 @@ class ApplicationController < ActionController::Base
       application_name: 'Calendar Reminders',
       application_version: '0.0.1')
 
+    config = YAML.load_file("#{Rails.root}/config/google_api.yml")
+
     # Initialize OAuth 2.0 client    
-    client.authorization.client_id = '689299727081-pvre0jugh5l6cfg2l5e18us4msu8udom.apps.googleusercontent.com'
-    client.authorization.client_secret = 'pI8RdUmDmbUloV1pZnR_rPm4'
+    client.authorization.client_id = config['client_id']
+    client.authorization.client_secret = config['client_secret']
+
     client.authorization.redirect_uri = sessions_authorize_url
 
     return client
