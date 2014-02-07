@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :appointments
-  has_many :contacts
+  has_many :appointments, dependent: :destroy
+  has_many :contacts, dependent: :destroy
 
   validates :email, :name, presence: true
 end

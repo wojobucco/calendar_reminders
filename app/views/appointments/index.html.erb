@@ -12,7 +12,9 @@
       <td><%= apt.start.localtime %></td>
       <td><%= apt.end.localtime %></td>
       <td><%= apt.contact.name %></td>
-      <td><%= link_to "Message", messages_path, :method => :post, class: "btn btn-default" %></td>
+      <td><%= button_to "Message", 
+        { controller: "messages", :action => :create, :method => :post, appointment_id: apt.id, contact_id: apt.contact.id }, 
+        class: "btn btn-default" %></td>
       <td><%= link_to "Edit", edit_appointment_path(apt.id), :method => :get, class: "btn btn-default" %></td>
       <td><%= button_to "Delete", appointment_path(apt.id), :method => :delete, 
         confirm: "Are you sure you wish to delete this appointment?", 

@@ -4,7 +4,9 @@ class MessagesController < ApplicationController
   before_action :authorize
 
   def create
-    send_message(nil)
+    contact = Contact.find(params[:contact_id])
+    appointment = Appointment.find(params[:appointment_id])
+    send_message(appointment, contact)
 
     flash[:success] = "Message sent"
     redirect_to appointments_url
@@ -12,7 +14,7 @@ class MessagesController < ApplicationController
 
   private 
   
-  def send_message(phone_number)
+  def send_message(appointment, contact)
     config = YAML.load_file("#{Rails.root}/config/twilio_api.yml")
 
     account_sid = config['account_sid']
@@ -20,9 +22,10 @@ class MessagesController < ApplicationController
 
     @client = Twilio::REST::Client.new account_sid, auth_token
      
-    message = @client.account.messages.create(:body => "Jenny please?! I love you <3",
-        :to => "+14125353745",
-        :from => "+14122084627")
+    message = @client.account.messages.create(
+      :body => "#{contact.name}, this is a reminder for your appointment on #{appointment.start.to_s}. Please call if you need to cancel",
+      :to => contact.phone_number,
+      :from => "+14122084627")
     puts message.to
   end
 end
