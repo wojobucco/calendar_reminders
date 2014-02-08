@@ -37,5 +37,4 @@ config/initializers/secret_token.rb
 *.swp
 *.idea
 tags
-config/twilio_api.yml
-config/google_api.yml
+config/api.yml

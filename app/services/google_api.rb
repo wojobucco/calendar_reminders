@@ -56,11 +56,11 @@ class GoogleApi
       application_name: 'Calendar Reminders',
       application_version: '0.0.1')
 
-    config = YAML.load_file("#{Rails.root}/config/google_api.yml")
+    config = YAML.load_file("#{Rails.root}/config/api.yml")
 
     # Initialize OAuth 2.0 client    
-    client.authorization.client_id = config['client_id']
-    client.authorization.client_secret = config['client_secret']
+    client.authorization.client_id = config['Google']['client_id']
+    client.authorization.client_secret = config['Google']['client_secret']
 
     return client
   end

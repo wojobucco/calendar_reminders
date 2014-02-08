@@ -15,17 +15,17 @@ class MessagesController < ApplicationController
   private 
   
   def send_message(appointment, contact)
-    config = YAML.load_file("#{Rails.root}/config/twilio_api.yml")
+    config = YAML.load_file("#{Rails.root}/config/api.yml")
 
-    account_sid = config['account_sid']
-    auth_token = config['auth_token']
+    account_sid = config['Twilio']['account_sid']
+    auth_token = config['Twilio']['auth_token']
 
     @client = Twilio::REST::Client.new account_sid, auth_token
      
     message = @client.account.messages.create(
       :body => "#{contact.name}, this is a reminder for your appointment on #{appointment.start.to_s}. Please call if you need to cancel",
       :to => contact.phone_number,
-      :from => "+14122084627")
+      :from => config['Twilio']['phone_number'])
     puts message.to
   end
 end
