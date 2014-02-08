@@ -62,6 +62,14 @@ class ContactsController < ApplicationController
     end
   end
 
+  def destroy_selected
+    #todo: implement this
+    debugger
+    puts 'foo'
+    flash[:success] = "Contact(s) deleted"
+    redirect_to contacts_url
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contact
