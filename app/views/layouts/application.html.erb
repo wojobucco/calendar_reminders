@@ -7,61 +7,28 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
+<%= render 'layouts/header' 
+%>
 <body class="container">
-  <% unless current_user.nil? %>
-    <h4 class="pull-right">Hello, <%= current_user.name %></h4>
+  <% if current_user %>
+    <div class="btn-group" >
+      <%= link_to "Appointments", "#{root_url}appointments", class: "btn btn-default" %>
+      <%= link_to "Contacts", "#{root_url}contacts", class: "btn btn-default" %>
+    </div>
   <% end %>
-  <header>
-    <h4>Calendar Reminders</h4>
-    <nav class="navbar navbar-default" role="navigation">
-      <ul class="nav navbar-nav">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Company", "#{root_url}info/about" %></li>
-        <li><%= link_to "Contact", "#{root_url}info/contact" %></li>
-      </ul>
-      <div id="auth" class="pull-right">
-        <ul class="nav navbar-nav">
-          <% if current_user %>
-            <li><%= link_to "Profile", "#{root_url}profile/#{current_user.id}" %></li> 
-            <li><%= link_to "Sign out", sessions_destroy_path, {method: 'delete' } %></li>
-          <% else %>
-            <li><%= link_to_function "Sign in", "$('#myModal').modal()" %></li>
-            <li><%= link_to_function "Register", "$('#myModal').modal()" %></li>
-          <% end %>
-        </ul>
-      </div>
-    </nav>
-  </header>
   <% if !flash.empty? %>
-    <div id="messages" class="alert error">
+    <div id="messages" class="alert alert-success">
       <% flash.each do |key, message| %>
         <p><%= message %></p>
       <% end %>
     </div>
   <% end %>
-  <% if current_user %>
-    <div id="sidebar-wrapper" class="col-md-2">
-      <ul class="nav bs-sidenav navbar-default">
-        <li><%= link_to "Appointments", "#{root_url}appointments" %></li>
-        <li><%= link_to "Contacts", "#{root_url}contacts" %></li>
-      </ul>
-    </div>
-  <% end %>
-  <% if current_user %>
-    <div id="content" class="col-md-10">
-  <% else %>
-    <div id="content" class="col-md-12">
-  <% end %>
+  <div id="content" class="col-md-12">
     <!-- Here goes the individual page content -->
     <%= render 'home/auth' %>
     <%= yield %>
   </div>
-  <footer class="text-center">
-    <small>
-      <p>Copyright 2013 - <%= Time.now.year %> (c) | Jonathan Worek<br/>
-      Calendar Reminders v 0.0.1</p>
-    </small>
-  </footer>
+  <%= render 'layouts/footer' %>
   <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </body>
