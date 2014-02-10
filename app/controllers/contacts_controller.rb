@@ -63,21 +63,36 @@ class ContactsController < ApplicationController
   end
 
   def destroy_selected
-    #todo: implement this
-    debugger
-    puts 'foo'
+    selected_contacts.each do |id|
+      contact = Contact.find(id)
+      contact.destroy
+    end
+
     flash[:success] = "Contact(s) deleted"
     redirect_to contacts_url
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_contact
-      @contact = Contact.find(params[:id])
+
+  def selected_contacts
+    contacts = []
+    params.each_key do |key|
+      if (key =~ /selected_contact_id_(\d+)/)
+        debugger
+        contacts << $1
+      end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def contact_params
-      params.require(:contact).permit(:name, :phone_number)
-    end
+    return contacts
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_contact
+    @contact = Contact.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def contact_params
+    params.require(:contact).permit(:name, :phone_number)
+  end
 end
