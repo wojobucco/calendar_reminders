@@ -41,5 +41,3 @@ gem 'twilio-ruby'
 gem 'bootstrap-sass'
 
 gem 'rspec-rails'
-
-gem 'debugger-xml'

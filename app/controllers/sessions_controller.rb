@@ -7,8 +7,7 @@ class SessionsController < ApplicationController
 
   def authorize
     if params[:code]
-
-      client = GoogleApi.new(redirect_uri: sessions_authorize_url, 
+      client = GoogleApi.new(redirect_uri: sessions_authorize_url,
         code: params[:code])
       result = client.get_user_info
 
