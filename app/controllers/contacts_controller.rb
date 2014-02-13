@@ -78,7 +78,6 @@ class ContactsController < ApplicationController
     contacts = []
     params.each_key do |key|
       if (key =~ /selected_contact_id_(\d+)/)
-        debugger
         contacts << $1
       end
     end

@@ -1,8 +1,37 @@
 class GoogleApi
 
-  def initialize(access_token)
-    @access_token = access_token
+  def initialize(params = {})
     @api_client = create_api_client
+    @api_client.authorization.redirect_uri = params[:redirect_uri]
+
+    if params[:code] && params[:access_token]
+      raise StandardError.new "Either code or access token, not both!"
+    elsif params[:code]
+      @api_client.authorization.code = params[:code]
+      @api_client.authorization.fetch_access_token!
+    elsif params[:access_token]
+      @api_client.authorization.access_token = params[:access_token]
+    end
+
+  end
+
+  def authorization_uri
+    Signet::OAuth2.generate_authorization_uri(@api_client.authorization.authorization_uri)
+  end
+
+  def access_token
+    @api_client.authorization.access_token
+  end
+
+  def refresh_token
+    @api_client.authorization.refresh_token
+  end
+
+  def get_user_info
+    oauth2 = @api_client.discovered_api 'oauth2'
+    result = @api_client.execute(
+      :api_method => oauth2.userinfo.get
+      )
   end
 
   def get_all_contacts
@@ -55,6 +84,11 @@ class GoogleApi
     client = Google::APIClient.new(
       application_name: 'Calendar Reminders',
       application_version: '0.0.1')
+
+    client.authorization.scope = [
+      'https://www.googleapis.com/auth/userinfo.email', 
+      'https://www.googleapis.com/auth/userinfo.profile'
+      ]
 
     config = YAML.load_file("#{Rails.root}/config/api.yml")
 
