@@ -3,11 +3,11 @@ class AppointmentsController < ApplicationController
   before_filter :authorize
 
   def index
-    @appointments = Appointment.all.where(user_id: current_user.id)
+    @appointments = Appointment.where(user_id: current_user.id)
   end
 
   def new
-    @contacts = Contact.all.where(user_id: current_user.id)
+    @contacts = Contact.where(user_id: current_user.id)
   end
 
   def create

@@ -46,7 +46,8 @@ describe AppointmentsController do
 
   describe "saving a newly created appointment" do
 
-    let(:valid_params) { { start_date: '1/1/2014', start_time: '12:00:00 PM', duration: '60' } }
+    let(:valid_params) { { start_date: '1/1/2014', start_time: '12:00:00 PM', 
+      duration: '60', contact: { contact_id: 1 } } }
 
     context "with an authenticated user" do
       before(:each) do
@@ -55,8 +56,8 @@ describe AppointmentsController do
       end
 
       it "redirects to the appointments list when the appointment is saved" do
-        Appointment.should_receive(:create).with(user_id: 1, start: Time.parse('1/1/2014 12:00:00 PM'), 
-          end: Time.parse('1/1/2014 1:00:00 PM')).and_return(double(Appointment, :persisted? => true))
+        Appointment.should_receive(:create).with(start: Time.parse('1/1/2014 12:00:00 PM'), 
+          end: Time.parse('1/1/2014 1:00:00 PM'), contact_id: '1', user_id: 1).and_return(double(Appointment, :persisted? => true))
 
         post 'create', valid_params
         expect(response).to redirect_to(appointments_path)
