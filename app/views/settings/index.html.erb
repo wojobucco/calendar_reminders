@@ -1,0 +1,6 @@
+<h1>User settings</h1>
+<ul>
+  <% @settings.each do |setting| %>
+    <li><%= "#{setting.key}: #{setting.value}" %></li>
+  <% end %>
+<ul/>

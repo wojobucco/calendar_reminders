@@ -41,3 +41,9 @@ gem 'twilio-ruby'
 gem 'bootstrap-sass'
 
 gem 'rspec-rails'
+
+gem 'enumerize'
+
+group :development, :test do
+  gem 'debugger'
+end
