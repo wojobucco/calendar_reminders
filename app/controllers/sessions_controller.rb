@@ -15,7 +15,10 @@ class SessionsController < ApplicationController
         user.name = result.data.name
         user.email = result.data.email
         user.refresh_token = client.refresh_token
+        user.save
       end
+
+      found_user.set_default_user_settings
 
       if (found_user.refresh_token != client.refresh_token)
         found_user.update(refresh_token: client.refresh_token)
