@@ -10,7 +10,6 @@ describe 'settings/index.html.erb' do
 
     render
 
-    expect(rendered).to match /reminder_advance_time: 60/
+    expect(rendered).to match /Reminder advance time/
   end
-
 end

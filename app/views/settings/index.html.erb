@@ -1,6 +1,15 @@
 <h1>User settings</h1>
 <ul>
   <% @settings.each do |setting| %>
-    <li><%= "#{setting.key}: #{setting.value}" %></li>
+    <li>
+      <%= form_for(setting, remote: true) do |f| %>
+        <%= f.label setting.key %>
+        <%= f.text_field :value %>
+        <% if [:reminder_advance_time].include?(setting.key.to_sym) %>
+          <%= select_tag(:time_units, options_for_select([:minutes, :hours, :days])) %>
+        <% end %>
+        <%= f.submit %>
+      <% end %>
+    </li>
   <% end %>
 <ul/>

@@ -8,7 +8,7 @@ CalendarReminders::Application.routes.draw do
 
   resources :messages, only: [:create]
 
-  resources :settings, only: [:index]
+  resources :settings, only: [:index, :update]
 
   get "authentication/index"
   get "info/about"

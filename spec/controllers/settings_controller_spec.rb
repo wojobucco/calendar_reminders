@@ -27,6 +27,15 @@ describe SettingsController do
 
     end
 
+    describe "PUT update" do
+      it "updates the setting with the received value" do
+        Setting.should_receive(:update).with('2', value: 60).and_return(stub_model(Setting, persisted: true))
+
+        post :update, {id: 2, setting: {value: 60}, time_units: :minutes},
+          valid_session
+      end
+    end
+
   end
 
   context "without an authenticated user" do
