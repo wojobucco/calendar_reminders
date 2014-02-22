@@ -1,5 +1,7 @@
 <h1>User settings</h1>
 <ul>
+  <!-- todo: need to make this form better handle different settings types, as well
+    as display in the units appropriate for each setting -->
   <% @settings.each do |setting| %>
     <li>
       <%= form_for(setting, remote: true) do |f| %>

@@ -34,6 +34,7 @@ describe SettingsController do
         post :update, {id: 2, setting: {value: 60}, time_units: :minutes},
           valid_session
       end
+      #todo: add more specs that cover the different units and types of settings
     end
 
   end
