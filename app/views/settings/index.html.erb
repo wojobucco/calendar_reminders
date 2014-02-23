@@ -8,7 +8,7 @@
         <%= f.label setting.key %>
         <%= f.text_field :value %>
         <% if [:reminder_advance_time].include?(setting.key.to_sym) %>
-          <%= select_tag(:time_units, options_for_select([:minutes, :hours, :days])) %>
+          <%= select_tag(:time_units, options_for_select([:minutes, :hours, :days], setting.units.to_sym)) %>
         <% end %>
         <%= f.submit %>
       <% end %>

@@ -28,13 +28,48 @@ describe SettingsController do
     end
 
     describe "PUT update" do
-      it "updates the setting with the received value" do
-        Setting.should_receive(:update).with('2', value: 60).and_return(stub_model(Setting, persisted: true))
+      context "when the request format is html" do
+        it "updates the setting with the received value in minutes" do
+          Setting.should_receive(:update).with('2', value: 60, units: :minutes).and_return(stub_model(Setting, persisted: true))
 
-        post :update, {id: 2, setting: {value: 60}, time_units: :minutes},
-          valid_session
+          post :update, {id: 2, setting: {value: 60}, time_units: :minutes},
+            valid_session
+        end
+
+        it "updates the setting with the received value in hours" do
+          Setting.should_receive(:update).with('2', value: 60, units: :hours).and_return(stub_model(Setting, persisted: true))
+
+          post :update, {id: 2, setting: {value: 60}, time_units: :hours},
+            valid_session
+        end
+
+        it "updates the setting with the received value in days" do
+          Setting.should_receive(:update).with('2', value: 60, units: :days).and_return(stub_model(Setting, persisted: true))
+
+          post :update, {id: 2, setting: {value: 60}, time_units: :days},
+            valid_session
+        end
+
+        it "returns a 400 error if the setting was not saved" do
+          Setting.stub(:update).and_return(stub_model(Setting, persisted?: false))
+
+          post :update, {id: 2, setting: {value: 60}, time_units: :days},
+            valid_session
+
+          expect(response.status).to eq(400)
+        end
       end
-      #todo: add more specs that cover the different units and types of settings
+
+      context "when the request format is json" do
+        it "returns a 400 error if the setting was not saved" do
+          Setting.stub(:update).and_return(stub_model(Setting, persisted?: false))
+
+          post :update, {format: :json, id: 2, setting: {value: 60}, time_units: :days},
+            valid_session
+
+          expect(response.status).to eq(400)
+        end
+      end
     end
 
   end

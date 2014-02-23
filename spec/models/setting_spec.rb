@@ -26,4 +26,19 @@ describe Setting do
     setting = Setting.new(user_id: 1, key: nil, value: "hello")
     expect(setting).to_not be_valid
   end
+
+  it "is valid with a valid units" do
+    setting = Setting.new(user_id: 1, key: Setting::KEYS[:reminder_advance_time], value: 30, units: Setting::UNITS[:minutes])
+    expect(setting).to be_valid
+  end
+
+  it "is valid with a nil units" do
+    setting = Setting.new(user_id: 1, key: Setting::KEYS[:reminder_advance_time], value: 30, units: nil)
+    expect(setting).to be_valid
+  end
+
+  it "is not valid with an invalid units" do
+    setting = Setting.new(user_id: 1, key: Setting::KEYS[:reminder_advance_time], value: 30, units: 'foo')
+    expect(setting).to_not be_valid
+  end
 end

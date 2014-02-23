@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     settings.each { |setting| setting.destroy }
 
     settings.build(
-      { key: Setting::KEYS[:reminder_advance_time], value: 60 }
+      { key: Setting::KEYS[:reminder_advance_time], value: 60, units: :minutes }
     )
 
     save
