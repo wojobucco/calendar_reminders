@@ -15,8 +15,8 @@
         <td><%= apt.start.localtime %></td>
         <td><%= apt.end.localtime %></td>
         <td><%= apt.contact.name %></td>
-        <td><%= button_to "Remind", 
-          { controller: "reminders", :action => :create, :method => :post, appointment_id: apt.id, contact_id: apt.contact.id }, 
+        <td><%= button_to "Send reminder", 
+          { controller: "appointments", :action => :send_reminder, :method => :post, id: apt.id }, 
           class: "btn btn-default" %></td>
         <td><%= link_to "Edit", edit_appointment_path(apt.id), :method => :get, class: "btn btn-default" %></td>
         <td><%= button_to "Delete", appointment_path(apt.id), :method => :delete, 

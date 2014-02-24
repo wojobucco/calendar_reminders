@@ -18,4 +18,9 @@ describe "routes for the appointments controller" do
     expect(:delete => appointment_path(1)).to route_to(
      controller: "appointments", action: "destroy", id: '1') 
   end
+
+  it "should route to send_reminder" do
+    expect(:post => send_reminder_appointment_path(1)).to route_to(
+      controller: "appointments", action: "send_reminder", id: '1')
+  end
 end

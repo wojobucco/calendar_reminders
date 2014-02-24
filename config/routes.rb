@@ -2,7 +2,11 @@ CalendarReminders::Application.routes.draw do
   delete "contacts/destroy_selected"
   resources :contacts
 
-  resources :appointments
+  resources :appointments do
+    member do
+      post 'send_reminder'
+    end
+  end
 
   resources :profile, only: [:index]
 

@@ -59,6 +59,19 @@ class AppointmentsController < ApplicationController
     redirect_to appointments_path
   end
 
+  def send_reminder
+    @appointment = Appointment.find(params[:id].to_i)
+    success = @appointment.send_reminder
+
+    if success
+      flash[:success] = "Reminder was sent successfully"
+    else
+      flash[:error] = "Reminder was not sent successfully. Please contact technical support"
+    end
+
+    redirect_to appointments_path
+  end
+
   private
 
   def parse_appointment_params
