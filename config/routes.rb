@@ -6,7 +6,7 @@ CalendarReminders::Application.routes.draw do
 
   resources :profile, only: [:index]
 
-  resources :messages, only: [:create]
+  resources :reminders, only: [:create]
 
   resources :settings, only: [:index, :update]
 
