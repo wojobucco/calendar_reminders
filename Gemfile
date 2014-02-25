@@ -33,6 +33,7 @@ gem 'bootstrap-sass'
 gem 'rspec-rails'
 gem 'enumerize'
 gem 'mysql2'
+gem 'whenever', require: false
 
 group :development, :test do
   gem 'debugger'

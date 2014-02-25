@@ -6,6 +6,9 @@ class Appointment < ActiveRecord::Base
   belongs_to :contact
 
   has_many :reminder_history_entry, dependent: :destroy
+
+  #todo: this needs to take into account the appointment's user's reminder advance time
+  scope :upcoming, -> { where("start > ?", Time.zone.now) } 
   
   def send_reminder
     message_text = "#{contact.name}, this is a reminder for your appointment on "\
