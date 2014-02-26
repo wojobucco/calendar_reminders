@@ -18,4 +18,17 @@ class Setting < ActiveRecord::Base
   enumerize :key, in: KEYS
 
   enumerize :units, in: UNITS
+
+  def base_units_normalized_value
+    case units.to_sym
+      when :minutes
+        value.to_i
+      when :hours
+        value.to_i * 60
+      when :days
+        value.to_i * 60 * 24
+      else
+        raise StandardError "Invalid setting value/units"
+    end
+  end
 end

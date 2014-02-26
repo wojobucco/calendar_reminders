@@ -8,7 +8,7 @@
 set :output, "#{Rails.root}/log/cron_log.log"
 
 every 1.minute do
-  runner "Appointment.unreminded.upcoming.each { |apt| apt.send_reminder }"
+  runner "Appointment.unreminded_upcoming.each { |apt| apt.send_reminder }"
 end
 #
 # every 2.hours do

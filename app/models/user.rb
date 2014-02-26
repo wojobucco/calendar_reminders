@@ -15,18 +15,4 @@ class User < ActiveRecord::Base
     save
   end
 
-  def reminder_advance_time
-    setting = settings.where(key: :reminder_advance_time).take
-
-    case setting.units.to_sym
-      when :minutes
-        setting.value.to_i
-      when :hours
-        setting.value.to_i * 60
-      when :days
-        setting.value.to_i * 60 * 24
-      else
-        raise StandardError "Invalid setting value/units"
-    end
-  end
 end
