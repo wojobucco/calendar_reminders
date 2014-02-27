@@ -9,8 +9,8 @@ class Appointment < ActiveRecord::Base
   has_many :settings, through: :user
 
   def send_reminder
-    message_text = "#{contact.name}, this is a reminder for your appointment on "\
-      "#{start.to_s}. Please call if you need to cancel"
+    message_text = "#{contact.name}, this is a reminder for your appointment at "\
+      "#{start.localtime.strftime('%a %b %e %Y, %l:%M %p')}. Please call if you need to cancel"
     phone_number = contact.phone_number
 
     @@client.send_sms_message(phone_number, message_text)
