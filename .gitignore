@@ -39,3 +39,4 @@ config/initializers/secret_token.rb
 tags
 config/api.yml
 config/beta_users.yml
+config/database.yml

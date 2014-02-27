@@ -1,0 +1,21 @@
+development:
+  adapter: mysql2
+  database: calendar_reminders_development
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: mysql2
+  database: calendar_reminders_test
+  pool: 5
+  timeout: 5000
+  username: root
+  password: 
+
+production:
+  adapter: mysql2
+  database: calendar_reminders
+  pool: 5
+  timeout: 5000
+  username: root
+  password: 
