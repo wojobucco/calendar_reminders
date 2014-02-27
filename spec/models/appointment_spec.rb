@@ -3,11 +3,13 @@ require 'spec_helper'
 describe Appointment do
 
   context "when a user has already created appointments" do
+    let!(:user) { User.create(email: 'foo@foo.com', name: 'foo') }
     let!(:apt_1) { Appointment.create(user_id: 1, start: 1.month.from_now) }
     let!(:apt_2) { Appointment.create(user_id: 1, start: 2.month.from_now) }
 
     before(:each) do
       apt_2.reminder_history_entries.create
+      user.set_default_user_settings
     end
 
     it "should return a list of appointments for a given user" do
@@ -16,7 +18,7 @@ describe Appointment do
     end
 
     it "should return the unreminded appointments" do
-      pending "Need to fix this test"
+      Appointment.create(user_id: 1, start: 10.minutes.from_now)
       appointments = Appointment.unreminded_upcoming
       expect(appointments.count).to eq(1)
     end

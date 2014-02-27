@@ -36,5 +36,6 @@ gem 'mysql2'
 gem 'whenever', require: false
 
 group :development, :test do
-  gem 'debugger'
+  gem 'byebug'
+  gem 'database_cleaner'
 end
