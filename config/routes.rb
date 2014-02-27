@@ -15,8 +15,11 @@ CalendarReminders::Application.routes.draw do
   resources :settings, only: [:index, :update]
 
   get "authentication/index"
+
   get "info/about"
   get "info/contact"
+  get "info/beta_notice"
+
   get "home/index"
 
   get "sessions/new"

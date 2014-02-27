@@ -38,3 +38,4 @@ config/initializers/secret_token.rb
 *.idea
 tags
 config/api.yml
+config/beta_users.yml

@@ -1,5 +1,9 @@
 class SessionsController < ApplicationController
 
+  before_action do
+    @@beta_users ||= load_beta_users
+  end
+
   def new
     client = GoogleApi.new(redirect_uri: sessions_authorize_url)
     redirect_to client.authorization_uri
@@ -10,6 +14,12 @@ class SessionsController < ApplicationController
       client = GoogleApi.new(redirect_uri: sessions_authorize_url,
         code: params[:code])
       result = client.get_user_info
+
+      #todo: remove this when beta has concluded
+      unless @@beta_users.include?(result.data.email)
+        redirect_to info_beta_notice_path
+        return
+      end
 
       found_user = User.find_or_create_by(google_id: result.data.id) do |user|
         user.name = result.data.name
@@ -45,4 +55,12 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to root_path
   end
+
+  private
+
+  def load_beta_users
+    yaml = YAML.load_file("#{Rails.root}/config/beta_users.yml")
+    yaml['beta_users']
+  end
+
 end
