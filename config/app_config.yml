@@ -3,7 +3,7 @@ beta_users: <%= ENV['BETA_USERS_LIST'] || '' %>
 
 google_api:
   client_id: <%= ENV['GOOGLE_API_CLIENT_ID'] || '' %>
-  client_secret: <%= ENV['GOOGLE_API__CLIENT_SECRET'] || '' %>
+  client_secret: <%= ENV['GOOGLE_API_CLIENT_SECRET'] || '' %>
 
 twilio_api:
   account_sid: <%= ENV['TWILIO_API_ACCOUNT_SID'] || '' %>
