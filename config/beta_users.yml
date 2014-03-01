@@ -1,3 +1,2 @@
-beta_users:
-  - jworek@gmail.com
-  - bethjehn@gmail.com
+# beta_users expects a CSV list of email addresses
+beta_users: <%= ENV['BETA_USERS_LIST'] %>
