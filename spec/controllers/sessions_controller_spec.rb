@@ -6,12 +6,7 @@ describe SessionsController do
     let(:api_result) { double('result') }
 
     before(:each) do
-      beta_users = <<-EOF
-        beta_users:
-          - foo@gmail.com
-      EOF
-      yaml = YAML.load(beta_users)
-      YAML.stub(:load_file).with("#{Rails.root}/config/beta_users.yml").and_return(yaml)
+      APP_CONFIG['beta_users'] = 'foo@gmail.com, peep@poop.com'
 
       client = double('googleapi')
       client.stub(:get_user_info).and_return(api_result)

@@ -1,3 +1,5 @@
+require 'csv'
+
 class SessionsController < ApplicationController
 
   before_action do
@@ -59,8 +61,7 @@ class SessionsController < ApplicationController
   private
 
   def load_beta_users
-    yaml = YAML.load_file("#{Rails.root}/config/beta_users.yml")
-    yaml['beta_users']
+    return CSV.parse(APP_CONFIG['beta_users']).flatten
   end
 
 end
