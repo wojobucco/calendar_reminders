@@ -1,19 +1,21 @@
 class Appointment < ActiveRecord::Base
-  
-  @@client ||= TwilioApi.new
-  
+
   belongs_to :user
   belongs_to :contact
 
   has_many :reminder_history_entries, dependent: :destroy
   has_many :settings, through: :user
 
+  def twilio_api_client
+    @@client ||= TwilioApi.new
+  end
+
   def send_reminder
     message_text = "#{contact.name}, this is a reminder for your appointment at "\
       "#{start.localtime.strftime('%a %b %e %Y, %l:%M %p')}. Please call if you need to cancel"
     phone_number = contact.phone_number
 
-    @@client.send_sms_message(phone_number, message_text)
+    twilio_api_client.send_sms_message(phone_number, message_text)
 
     reminder_history_entries.create
   end

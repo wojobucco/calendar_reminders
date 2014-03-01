@@ -1,8 +1,0 @@
-Google:
-  client_id: <%= ENV['GOOGLE_CLIENT_ID'] %>
-  client_secret: <%= ENV['GOOGLE_CLIENT_SECRET'] %>
-
-Twilio:
-  account_sid: <%= ENV['TWILIO_ACCOUNT_SID'] %>
-  auth_token: <%= ENV['TWILIO_AUTH_TOKEN'] %>
-  phone_number: <%= ENV['TWILIO_PHONE_NUMBER'] %>

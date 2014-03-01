@@ -2,10 +2,6 @@ require 'csv'
 
 class SessionsController < ApplicationController
 
-  before_action do
-    @@beta_users ||= load_beta_users
-  end
-
   def new
     client = GoogleApi.new(redirect_uri: sessions_authorize_url)
     redirect_to client.authorization_uri
@@ -17,8 +13,7 @@ class SessionsController < ApplicationController
         code: params[:code])
       result = client.get_user_info
 
-      #todo: remove this when beta has concluded
-      unless @@beta_users.include?(result.data.email)
+      unless is_beta_user?(result.data.email)
         redirect_to info_beta_notice_path
         return
       end
@@ -59,6 +54,12 @@ class SessionsController < ApplicationController
   end
 
   private
+
+  def is_beta_user?(email)
+    @beta_users ||= load_beta_users
+
+    @beta_users.include?(email)
+  end
 
   def load_beta_users
     return CSV.parse(APP_CONFIG['beta_users']).flatten

@@ -90,11 +90,9 @@ class GoogleApi
       'https://www.googleapis.com/auth/userinfo.profile'
       ]
 
-    config = YAML.load_file("#{Rails.root}/config/api.yml")
-
     # Initialize OAuth 2.0 client    
-    client.authorization.client_id = config['Google']['client_id']
-    client.authorization.client_secret = config['Google']['client_secret']
+    client.authorization.client_id = APP_CONFIG['google_api']['client_id']
+    client.authorization.client_secret = APP_CONFIG['google_api']['client_secret']
 
     return client
   end
