@@ -30,12 +30,12 @@ gem 'google-api-client'
 gem 'httparty'
 gem 'twilio-ruby'
 gem 'bootstrap-sass'
-gem 'rspec-rails'
 gem 'enumerize'
 gem 'mysql2'
 gem 'whenever', require: false
 
 group :development, :test do
+  gem 'rspec-rails'
   gem 'byebug'
   gem 'database_cleaner'
 end
