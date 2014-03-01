@@ -38,3 +38,4 @@ config/initializers/secret_token.rb
 *.idea
 tags
 config/*.secret
+script/set_heroku_config.sh
