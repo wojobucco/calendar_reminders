@@ -2,9 +2,8 @@
 require File.expand_path('../application', __FILE__)
 
 # load the secret environment configuration
-if File.exist?(File.expand_path('../secret.rb', __FILE__))
-  load File.expand_path('../secret.rb', __FILE__)
-end
+secrets_file = File.expand_path('../secrets.rb', __FILE__)
+load secrets_file if File.exist?(secrets_file)
 
 # Initialize the Rails application.
 CalendarReminders::Application.initialize!
