@@ -1,3 +1,5 @@
+require_relative '../services/twilio_api'
+
 class Appointment < ActiveRecord::Base
 
   belongs_to :user
