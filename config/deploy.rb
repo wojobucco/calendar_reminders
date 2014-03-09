@@ -1,5 +1,6 @@
 require 'bundler/capistrano'
 require 'capistrano/ext/multistage'
+require 'whenever/capistrano'
 
 set :stages, %w(development production)
 
@@ -13,6 +14,8 @@ ssh_options[:forward_agent] = true
 set :user, "ubuntu"
 
 set :rails_env, 'production'
+
+set :whenever_command, "bundle exec whenever"
 
 namespace :deploy do
   task :start do ; end
