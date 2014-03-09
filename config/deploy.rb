@@ -17,6 +17,8 @@ set :rails_env, 'production'
 
 set :whenever_command, "bundle exec whenever"
 
+before "deploy:restart", "deploy:upload_secrets"
+
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
@@ -25,6 +27,6 @@ namespace :deploy do
   end
 
   task :upload_secrets do
-    upload('config/secret.rb', File.join(deploy_to, 'config','secret.rb'), options => {:via => :scp, :mode => '644' })
+    #upload('config/secret.rb', File.join(deploy_to, 'config','secret.rb'), {:via => :scp, :mode => '644' })
   end
 end
