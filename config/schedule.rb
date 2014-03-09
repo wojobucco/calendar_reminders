@@ -5,7 +5,7 @@
 
 # example:
 #
-set :output, "#{Rails.root}/log/cron_log.log"
+#set :output, "#{Rails.root}/log/cron_log.log"
 
 every 1.minute do
   command "/var/www/apps/calendar-reminders/shared/scripts/env_variables.sh"
