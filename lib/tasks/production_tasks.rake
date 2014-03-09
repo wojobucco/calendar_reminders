@@ -1,4 +1,5 @@
 require File.expand_path("../../../config/environment", __FILE__)
+require_relative '../../app/models/appointment'
 
 namespace :production do
   desc "Send all reminders to contacts with appointments within the time window"
