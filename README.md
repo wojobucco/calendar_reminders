@@ -1,6 +1,31 @@
 # Calendar Reminders
 An appointment management and reminding application developed on the Ruby on Rails web framework.
 
+## Quick start guide
+1. Clone the repository:
+
+        git clone git@github.com:wojobucco/calendar_reminders.git
+
+2. Change into the cloned directory:
+        
+        cd calendar_reminders
+
+3. Assuming you are using rbenv to manage your ruby environment, install ruby:
+
+        rbenv install
+
+4. Update rubygems
+
+        gem update --system 
+
+5. Install the bundler gem
+
+        gem install bundler
+
+6. Install the bundle of gems
+
+        bundle install
+
 ## Running the app in development
 1. Create the database
 
