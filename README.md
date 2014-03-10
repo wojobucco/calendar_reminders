@@ -1,5 +1,5 @@
 # Calendar Reminders
-An appointment management and reminding application developed on the Ruby on Rails web framework.
+An appointment management and reminders application developed on the Ruby on Rails web framework.
 
 ## Quick start guide
 1. Clone the repository:
