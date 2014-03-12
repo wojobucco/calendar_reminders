@@ -61,12 +61,18 @@ class AppointmentsController < ApplicationController
 
   def send_reminder
     @appointment = Appointment.find(params[:id].to_i)
-    success = @appointment.send_reminder
+
+    begin
+      success = @appointment.send_reminder
+    rescue => e
+      success = false
+      flash[:error] = "This functionality is currently only available for phone numbers that have been verified by the admin."
+    end
 
     if success
       flash[:success] = "Reminder was sent successfully"
     else
-      flash[:error] = "Reminder was not sent successfully. Please contact technical support"
+      flash[:error] ||= "Reminder was not sent successfully. Please contact technical support"
     end
 
     redirect_to appointments_path

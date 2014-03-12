@@ -17,11 +17,16 @@
     </div>
   <% end %>
   <% if !flash.empty? %>
-    <div id="messages" class="alert alert-success">
-      <% flash.each do |key, message| %>
-        <p><%= message %></p>
-      <% end %>
-    </div>
+    <% if flash[:success] %>
+      <div id="messages_success" class="alert alert-success">
+        <p><%= flash[:success] %></p>
+      </div>
+    <% end %>
+    <% if flash[:error] %>
+      <div id="messages_failure" class="alert alert-danger">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
   <% end %>
   <div id="content" class="col-md-12">
     <!-- Here goes the individual page content -->
