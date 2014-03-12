@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ContactsController do
   
-  let(:valid_attributes) { { "name" => "MyString" } }
+  let(:valid_attributes) { { "name" => "MyString", user_id: 1 } }
   let(:valid_session) { {user_id: 1} }
 
   before(:each) do
@@ -12,6 +12,14 @@ describe ContactsController do
   describe "GET index" do
     it "assigns all contacts as @contacts" do
       contact = Contact.create! valid_attributes
+      get :index, {}, valid_session
+      assigns(:contacts).should eq([contact])
+    end
+
+    it "only retrieves contacts for the currently logged in user" do
+      contact = Contact.create! valid_attributes
+      contact2 = Contact.create!({ name: "not my contact", user_id: 2 })
+
       get :index, {}, valid_session
       assigns(:contacts).should eq([contact])
     end
