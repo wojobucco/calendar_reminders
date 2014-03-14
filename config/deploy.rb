@@ -27,6 +27,7 @@ namespace :deploy do
   end
 
   task :upload_secrets do
-    #upload('config/secret.rb', File.join(deploy_to, 'config','secret.rb'), {:via => :scp, :mode => '644' })
+    top.upload(File.expand_path('../secrets.rb', __FILE__), File.join(current_path, 'config','secrets.rb'), 
+      {:via => :scp, :mode => '644', :keys => ssh_options[:keys] })
   end
 end
