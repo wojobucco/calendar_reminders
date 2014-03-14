@@ -18,4 +18,4 @@ production:
   pool: 5
   timeout: 5000
   username: root
-  password: 
+  password: <%= ENV['RAILS_DB_PASSWORD'] %>
