@@ -109,11 +109,6 @@ SSH into the server and setup the database
 
         rake db:migrate
 
-(todo) include this in the automated deploy
-Copy config/secrets.rb to the server with the following command:
-
-    scp config/secrets.rb ubuntu@webserver:/var/www/apps/calendar-reminders/current/config
-
 ### Scheduled jobs: cron/whenever
 The calendar-reminders application makes use of scheduled jobs run under cron to send out its reminders.  
 To make things a little bit easier, the application uses the 'whenever' gem for generating the crontab upon deployment to production.
