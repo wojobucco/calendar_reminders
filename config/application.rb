@@ -11,6 +11,6 @@ module CalendarReminders
 
     config.i18n.enforce_available_locales = true
      
-    APPLICATION_VERSION = '0.1.0' 
+    load File.expand_path('../version.rb', __FILE__)
   end
 end
