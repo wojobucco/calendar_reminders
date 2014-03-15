@@ -3,7 +3,18 @@ class AppointmentsController < ApplicationController
   before_filter :authorize
 
   def index
-    @appointments = Appointment.where(user_id: current_user.id)
+    appt_filter = params[:filter] || :upcoming
+
+    case appt_filter.to_sym
+      when :upcoming
+        @appointments = Appointment.where(user_id: current_user.id).upcoming
+      when :past
+        @appointments = Appointment.where(user_id: current_user.id).past
+      when :all
+        @appointments = Appointment.where(user_id: current_user.id)
+      else
+        raise StandardError.new "Unknown appointment filter type #{appt_filter}"
+    end 
   end
 
   def new

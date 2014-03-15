@@ -17,12 +17,41 @@ describe AppointmentsController do
       end
 
       context "with a user that has appointments" do
+        
+        let(:upcoming_appointments) { [double(Appointment, user_id: 1, start: (Time.now + 1.days))] }
+        let(:past_appointments) { [double(Appointment, user_id: 1, start: (Time.now - 1.days))] }
+        let(:all_appointments) { upcoming_appointments | past_appointments }
 
-        let(:appointments) { [double(Appointment, user_id: 1)] }
+        context "when no filter is set" do
+          it "gets a list of the upcoming appointments for the user" do
+            Appointment.should_receive(:upcoming).and_return(upcoming_appointments)
+            get('index')
+            expect(assigns(:appointments)).to eq(upcoming_appointments)
+          end
+        end
 
-        it "gets a list of appointments for the currently logged in user" do
-          Appointment.should_receive(:where).with(user_id: 1).and_return(appointments)
-          get 'index'
+        context "when the all filter is set" do
+          it "gets a list of all appointments for the currently logged in user" do
+            Appointment.should_receive(:where).with(user_id: 1).and_return(all_appointments)
+            get('index', { filter: :all })
+            expect(assigns(:appointments)).to eq(all_appointments)
+          end
+        end
+
+        context "when the upcoming filter is set" do
+          it "gets a list of only the upcoming appointments for the currently logged in user" do
+            Appointment.should_receive(:upcoming).and_return(upcoming_appointments)
+            get('index', { filter: :upcoming })
+            expect(assigns(:appointments)).to eq(upcoming_appointments)
+          end
+        end
+
+        context "when the past filter is set" do
+          it "gets a list of only the past appointments for the currently logged in user" do
+            Appointment.should_receive(:past).and_return(past_appointments)
+            get('index', { filter: :past })
+            expect(assigns(:appointments)).to eq(past_appointments)
+          end
         end
       end
     end

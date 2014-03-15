@@ -8,9 +8,8 @@ class Appointment < ActiveRecord::Base
   has_many :reminder_history_entries, dependent: :destroy
   has_many :settings, through: :user
 
-  def twilio_api_client
-    @@client ||= TwilioApi.new
-  end
+  scope :upcoming, -> { where("start > ?", Time.now) }
+  scope :past, -> { where("start < ?", Time.now) }
 
   def send_reminder
     message_text = "#{contact.name}, this is a reminder for your appointment at "\
@@ -27,7 +26,6 @@ class Appointment < ActiveRecord::Base
   end
 
   class << self
-
     def unreminded_upcoming
       unreminded = find_by_sql(
         "SELECT * FROM ( "\
@@ -50,5 +48,10 @@ class Appointment < ActiveRecord::Base
       end
     end
   end
-    
+
+  private
+
+  def twilio_api_client
+    @@client ||= TwilioApi.new
+  end
 end

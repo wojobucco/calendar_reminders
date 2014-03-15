@@ -1,0 +1,26 @@
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>Duration</th>
+      <th>Client</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @appointments.each do |apt| %>
+      <tr>
+        <td><%= apt.start.localtime.strftime('%A %B %e %Y, %l:%M %p') %></td>
+        <td><%= "#{((apt.end.localtime - apt.start.localtime) / 60).to_i} minutes" %></td>
+        <td><%= apt.contact.name %></td>
+        <td><%= button_to "Send reminder", 
+          { controller: "appointments", :action => :send_reminder, :method => :post, id: apt.id }, 
+          class: "btn btn-default" %></td>
+        <td><%= link_to "Edit", edit_appointment_path(apt.id), :method => :get, class: "btn btn-default" %></td>
+        <td><%= button_to "Delete", appointment_path(apt.id), :method => :delete, 
+          confirm: "Are you sure you wish to delete this appointment?", 
+          class: "btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

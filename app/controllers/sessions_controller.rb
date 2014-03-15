@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
       session['user_id'] = found_user.id
       session['access_token'] = client.access_token
 
-      redirect_to root_path
+      redirect_to appointments_path
     else
       flash[:notice] = params[:error]
       redirect_to root_path
