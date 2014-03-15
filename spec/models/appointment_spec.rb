@@ -25,11 +25,54 @@ describe Appointment do
   end
 
   context "when a user does not have any appointments created" do
-
     it "should not return any appointments for this user" do
       appointments = Appointment.where(user_id: 1)
       expect(appointments.count).to eq(0)
     end
- 
+  end
+
+  describe "#send_reminder" do
+    let(:api_client) { double('api_client').as_null_object }
+    let(:contact) { mock_model(Contact, id: 1, phone_number: "123-456-7890") }
+
+    subject do
+      Appointment.new(user_id: 1, contact: contact, start: Time.now)
+    end
+
+    before(:each) do
+      subject.stub(:twilio_api_client).and_return(api_client)
+      subject.reminder_history_entries.stub(:create)
+    end
+
+    context "when a reminder has not yet been sent" do
+      it "should send a reminder using the API client" do
+        api_client.should_receive(:send_sms_message)   
+        subject.send_reminder
+      end
+
+      it "should create a reminder history entry" do
+        subject.reminder_history_entries.should_receive(:create)
+        subject.send_reminder
+      end
+    end
+
+    context "when a reminder has already been sent" do
+      before(:each) do
+        subject.stub(:reminder_sent?).and_return(true)
+      end
+
+      it "should raise an error" do
+        expect { subject.send_reminder }.to raise_error
+      end
+
+      it "should not send another reminder" do
+        api_client.should_not_receive(:send_sms_message)   
+
+        begin
+          subject.send_reminder
+        rescue => e
+        end
+      end
+    end
   end
 end

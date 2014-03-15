@@ -12,6 +12,10 @@ class Appointment < ActiveRecord::Base
   scope :past, -> { where("start < ?", Time.now) }
 
   def send_reminder
+    if self.reminder_sent?
+      raise StandardError.new "A reminder was already sent for this appointment."
+    end
+
     message_text = "#{contact.name}, this is a reminder for your appointment at "\
       "#{start.localtime.strftime('%a %b %e %Y, %l:%M %p')}. Please call if you need to cancel"
     phone_number = contact.phone_number
