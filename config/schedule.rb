@@ -7,7 +7,7 @@
 #
 #set :output, "#{Rails.root}/log/cron_log.log"
 
-every 1.minute do
+every 15.minutes do
   env :PATH, ENV['PATH']
   rake "production:send_reminders"
 end
