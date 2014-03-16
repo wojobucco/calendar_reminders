@@ -34,9 +34,10 @@ describe Appointment do
   describe "#send_reminder" do
     let(:api_client) { double('api_client').as_null_object }
     let(:contact) { mock_model(Contact, id: 1, phone_number: "123-456-7890") }
+    let(:user) { mock_model(User, id: 1) }
 
     subject do
-      Appointment.new(user_id: 1, contact: contact, start: Time.now)
+      Appointment.new(user_id: 1, contact: contact, user: user, start: Time.now)
     end
 
     before(:each) do
@@ -44,7 +45,31 @@ describe Appointment do
       subject.reminder_history_entries.stub(:create)
     end
 
+    context "when a user has reached the monthly reminder limit" do
+      before(:each) do
+        user.stub(:reminders_sent_in_current_month).and_return(
+          GlobalSetting::MAX_MONTHLY_REMINDERS_PER_USER)
+      end
+
+      it "should raise an error" do
+        expect { subject.send_reminder }.to raise_error
+      end
+
+      it "should not send another reminder" do
+        api_client.should_not_receive(:send_sms_message)   
+
+        begin
+          subject.send_reminder
+        rescue => e
+        end
+      end
+    end
+
     context "when a reminder has not yet been sent" do
+      before(:each) do
+        user.stub(:reminders_sent_in_current_month).and_return(0)
+      end
+
       it "should send a reminder using the API client" do
         api_client.should_receive(:send_sms_message)   
         subject.send_reminder

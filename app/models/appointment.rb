@@ -13,7 +13,9 @@ class Appointment < ActiveRecord::Base
 
   def send_reminder
     if self.reminder_sent?
-      raise StandardError.new "A reminder was already sent for this appointment."
+      raise StandardError.new "Cannot send reminder. A reminder was already sent for this appointment."
+    elsif self.user.reminders_sent_in_current_month >= GlobalSetting::MAX_MONTHLY_REMINDERS_PER_USER
+      raise StandardError.new "Cannot send reminder. User has reached their monthly reminder limit"
     end
 
     message_text = "#{contact.name}, this is a reminder for your appointment at "\
