@@ -11,6 +11,10 @@ class User < ActiveRecord::Base
     reminder_history_entries.where("created_at > ?", current_month).count
   end
 
+  def reminders_sent_all_time
+    reminder_history_entries.count
+  end
+
   def set_default_user_settings
     settings.each { |setting| setting.destroy }
 

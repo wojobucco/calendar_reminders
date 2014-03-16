@@ -1,4 +1,12 @@
 <h1>User profile</h1>
+<h4>Reminders sent:</h4>
+<ul>
+  <li>Current month / quota: <%= @user.reminders_sent_in_current_month %> /
+    <%= GlobalSetting::MAX_MONTHLY_REMINDERS_PER_USER %>
+  </li>
+  <li>All time: <%= @user.reminders_sent_all_time %></li>
+</ul>
+<h4>User attributes:</h4>
 <ul>
   <% @user.attributes.each do |key, value| %>
     <li><%= "#{key.to_s} : #{value.to_s}" %></li>
