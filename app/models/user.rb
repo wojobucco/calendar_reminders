@@ -8,11 +8,11 @@ class User < ActiveRecord::Base
   validates :email, :name, presence: true
 
   def reminders_sent_in_current_month 
-    reminder_history_entries.where("created_at > ?", current_month).count
+    reminder_history_entries.unscoped.where("created_at > ?", current_month).count
   end
 
   def reminders_sent_all_time
-    reminder_history_entries.count
+    reminder_history_entries.unscoped.count
   end
 
   def set_default_user_settings
