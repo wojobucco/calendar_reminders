@@ -8,8 +8,11 @@ class Appointment < ActiveRecord::Base
   has_many :reminder_history_entries, dependent: :destroy
   has_many :settings, through: :user
 
+  default_scope { where(deleted: false) }
+
   scope :upcoming, -> { where("start > ?", Time.now) }
   scope :past, -> { where("start < ?", Time.now) }
+  scope :deleted, -> { unscoped.where(deleted: true) }
 
   def send_reminder
     if self.reminder_sent?

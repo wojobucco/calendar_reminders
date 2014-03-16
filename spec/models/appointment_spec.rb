@@ -17,10 +17,26 @@ describe Appointment do
       expect(appointments.count).to eq(2)
     end
 
-    it "should return the unreminded appointments" do
-      Appointment.create(user_id: 1, start: 10.minutes.from_now)
-      appointments = Appointment.unreminded_upcoming
-      expect(appointments.count).to eq(1)
+    context "when an appointment has been deleted" do
+      let!(:apt_deleted) { Appointment.create(user_id: 1, start: 2.month.from_now, deleted: true) }
+
+      it "scoped queries should not return deleted appointments" do
+        appointments = Appointment.where(user_id: 1)
+        expect(appointments.count).to eq(2)
+      end
+
+      it "unscoped queries should return deleted appointments" do
+        appointments = Appointment.unscoped.where(user_id: 1)
+        expect(appointments.count).to eq(3)
+      end
+    end
+
+    describe ".unreminded_upcoming" do
+      it "should return the unreminded appointments" do
+        Appointment.create(user_id: 1, start: 10.minutes.from_now)
+        appointments = Appointment.unreminded_upcoming
+        expect(appointments.count).to eq(1)
+      end
     end
   end
 

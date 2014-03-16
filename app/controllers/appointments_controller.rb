@@ -59,9 +59,8 @@ class AppointmentsController < ApplicationController
 
   def destroy
     apt = Appointment.find(params[:id])
-    apt.destroy
 
-    if (!apt.persisted?)
+    if (apt.update(deleted: true))
       flash[:success] = "Appointment deleted successfully"
     else
       flash[:error] = "Appointment was not deleted succesfully"

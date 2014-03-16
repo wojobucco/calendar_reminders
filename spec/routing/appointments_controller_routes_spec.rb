@@ -14,7 +14,7 @@ describe "routes for the appointments controller" do
     expect(:post => appointments_path).to route_to("appointments#create")
   end
 
-  it "should route to delete" do
+  it "should route to destroy" do
     expect(:delete => appointment_path(1)).to route_to(
      controller: "appointments", action: "destroy", id: '1') 
   end

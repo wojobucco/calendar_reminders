@@ -110,9 +110,17 @@ describe AppointmentsController do
         expect(response).to redirect_to(appointments_path)
       end
 
-      it "destroys the appointment" do
-        apt = mock_model(Appointment, id: 1)
-        apt.should_receive(:destroy)
+      it "does a soft delete of the appointment" do
+        apt = stub_model(Appointment, id: 1)
+        apt.should_receive(:update).with(deleted: true)
+        Appointment.stub(:find).and_return(apt)
+
+        delete 'destroy', id: 1
+      end
+
+      it "does not destroy the appointment" do
+        apt = stub_model(Appointment, id: 1)
+        apt.should_not_receive(:destroy)
         Appointment.stub(:find).and_return(apt)
 
         delete 'destroy', id: 1
