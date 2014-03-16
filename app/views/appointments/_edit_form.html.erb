@@ -8,6 +8,6 @@
 <span>minutes</span>
 <p>
   <span>Client:</span>
-  <%= select(:contact, :contact_id, @contacts.collect { |c| [c.name, c.id] }) if @contacts %>
+  <%= select(:appointment, :contact_id, @contacts.collect { |c| [c.name, c.id] }) if @contacts %>
 </p>
 <br/>

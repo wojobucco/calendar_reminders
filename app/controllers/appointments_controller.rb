@@ -78,7 +78,7 @@ class AppointmentsController < ApplicationController
       apt_start = Time.parse(start_str)
       apt_end = apt_start + (params[:duration].to_i * 60)
 
-      return { start: apt_start, end: apt_end, contact_id: params[:contact][:contact_id] }
+      return { start: apt_start, end: apt_end, contact_id: params[:appointment][:contact_id] }
     rescue
       return {}
     end
