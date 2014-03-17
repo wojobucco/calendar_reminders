@@ -12,9 +12,9 @@ describe Setting do
     expect(setting).to_not be_valid
   end
 
-  it "is not valid without a value" do
-    setting = Setting.new(user_id: 1, key: Setting::KEYS[:reminder_advance_time], value: nil)
-    expect(setting).to_not be_valid
+  it "is valid without a value" do
+    setting = Setting.new(user_id: 1, key: Setting::KEYS[:phone_number], value: nil)
+    expect(setting).to be_valid
   end
 
   it "is not valid without a user_id" do

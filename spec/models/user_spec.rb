@@ -1,6 +1,9 @@
 require 'spec_helper'
+require_relative 'helpers/user_helpers'
 
 describe User do
+
+  include Helpers::UserHelpers
 
   it "should not be valid without an email" do
     user = User.new({ :email => nil, :refresh_token => "klasldfj", :google_id => "foo", :name => "foo"})
@@ -21,23 +24,31 @@ describe User do
 
     let(:valid_user) { User.create({ :email => "foo@foo.com", :refresh_token => "klasldfj", :google_id => "foo", :name => "foo"}) }
 
-    it "saves the user" do
-      valid_user.should_receive(:save)
-      valid_user.set_default_user_settings
-    end
-
-    it "creates all settings with their default values" do
+    it "creates a reminder_advance_time setting set to 60 minutes" do
       valid_user.set_default_user_settings
 
-      pending "expect needs a custom matcher"
-      expect(valid_user.settings).to include(Setting.new(key: Setting::KEYS[:reminder_advance_time], value: 60))
+      setting = get_setting_by_key(valid_user.settings, :reminder_advance_time)
+
+      expect(setting).to_not be_nil
+      expect(setting.value).to eq(60)
+      expect(setting.units).to eq(:minutes.to_s)
     end
 
+    it "creates a phone_number setting set to nil" do
+      valid_user.set_default_user_settings
+
+      setting = get_setting_by_key(valid_user.settings, :phone_number)
+
+      expect(setting).to_not be_nil
+      expect(setting.value).to be_nil
+      expect(setting.units).to be_nil
+    end
+    
     it "destroys all existing settings before recreating default settings" do
       valid_user.settings.create(key: Setting::KEYS[:reminder_advance_time], value: 60)
       expect(valid_user.settings.count).to eq(1)
 
-      valid_user.settings.stub(:build)
+      valid_user.settings.stub(:create)
       valid_user.set_default_user_settings
 
       expect(valid_user.settings.count).to eq(0)

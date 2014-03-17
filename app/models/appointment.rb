@@ -49,7 +49,8 @@ class Appointment < ActiveRecord::Base
       user_reminder_advance_times = {}
       unreminded.select do |apt|
         unless user_reminder_advance_times[apt.user_id]
-          user_reminder_advance_times[apt.user_id] = apt.settings.where(key: :reminder_advance_time).first.base_units_normalized_value
+          user_reminder_advance_times[apt.user_id] = 
+            apt.settings.where(key: :reminder_advance_time).first.base_units_normalized_value
         end
 
         # time addition is in seconds, the normalized reminder advance time is in minutes

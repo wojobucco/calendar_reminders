@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140316191534) do
+ActiveRecord::Schema.define(version: 20140317023321) do
 
   create_table "appointments", force: true do |t|
     t.integer  "user_id"

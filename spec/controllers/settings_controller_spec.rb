@@ -30,21 +30,21 @@ describe SettingsController do
     describe "PUT update" do
       context "when the request format is html" do
         it "updates the setting with the received value in minutes" do
-          Setting.should_receive(:update).with('2', value: 60, units: :minutes).and_return(stub_model(Setting, persisted: true))
+          Setting.should_receive(:update).with('2', value: "60", units: :minutes).and_return(stub_model(Setting, persisted: true))
 
           post :update, {id: 2, setting: {value: 60}, time_units: :minutes},
             valid_session
         end
 
         it "updates the setting with the received value in hours" do
-          Setting.should_receive(:update).with('2', value: 60, units: :hours).and_return(stub_model(Setting, persisted: true))
+          Setting.should_receive(:update).with('2', value: "60", units: :hours).and_return(stub_model(Setting, persisted: true))
 
           post :update, {id: 2, setting: {value: 60}, time_units: :hours},
             valid_session
         end
 
         it "updates the setting with the received value in days" do
-          Setting.should_receive(:update).with('2', value: 60, units: :days).and_return(stub_model(Setting, persisted: true))
+          Setting.should_receive(:update).with('2', value: "60", units: :days).and_return(stub_model(Setting, persisted: true))
 
           post :update, {id: 2, setting: {value: 60}, time_units: :days},
             valid_session

@@ -2,7 +2,8 @@ class Setting < ActiveRecord::Base
   extend Enumerize
 
   KEYS = {
-    :reminder_advance_time => 0
+    :reminder_advance_time => 0,
+    :phone_number => 1
   }
 
   UNITS = {
@@ -13,7 +14,7 @@ class Setting < ActiveRecord::Base
 
   belongs_to :user
 
-  validates_presence_of :key, :value, :user_id
+  validates_presence_of :key, :user_id
 
   enumerize :key, in: KEYS
 

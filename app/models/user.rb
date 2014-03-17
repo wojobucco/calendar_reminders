@@ -18,11 +18,8 @@ class User < ActiveRecord::Base
   def set_default_user_settings
     settings.each { |setting| setting.destroy }
 
-    settings.build(
-      { key: Setting::KEYS[:reminder_advance_time], value: 60, units: :minutes }
-    )
-
-    save
+    settings.create({ key: Setting::KEYS[:reminder_advance_time], value: 60, units: :minutes })
+    settings.create({ key: Setting::KEYS[:phone_number] })
   end
 
   private

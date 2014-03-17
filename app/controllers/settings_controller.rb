@@ -6,9 +6,10 @@ class SettingsController < ApplicationController
   end
 
   def update
-    setting_value = params[:setting][:value].to_i
+    setting_value = params[:setting][:value]
+    setting_units = params[:time_units].to_sym if params[:time_units]
 
-    @setting = Setting.update(params[:id], value: setting_value, units: params[:time_units].to_sym)
+    @setting = Setting.update(params[:id], value: setting_value, units: setting_units)
 
     respond_to do |format|
       if @setting.persisted?
