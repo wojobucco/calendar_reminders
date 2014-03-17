@@ -76,7 +76,7 @@ describe AppointmentsController do
   describe "saving a newly created appointment" do
 
     let(:valid_params) { { start_date: '1/1/2014', start_time: '12:00:00 PM', 
-      duration: '60', contact: { contact_id: 1 } } }
+      duration: '60', appointment: { contact_id: 1 } } }
 
     context "with an authenticated user" do
       before(:each) do
