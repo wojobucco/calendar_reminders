@@ -21,8 +21,13 @@ class Appointment < ActiveRecord::Base
       raise StandardError.new "Cannot send reminder. User has reached their monthly reminder limit"
     end
 
-    message_text = "#{contact.name}, this is a reminder for your appointment at "\
-      "#{start.localtime.strftime('%a %b %e %Y, %l:%M %p')}. Please call if you need to cancel"
+    phone_number_setting = user.settings.where(key: Setting::KEYS[:phone_number]).first
+    callback_number = phone_number_setting.value unless phone_number_setting.nil?
+
+    message_text = "#{contact.name}, this is a reminder for your appt with #{user.name} "\
+      "at #{start.localtime.strftime('%-m/%e/%y, %l:%M %p')}. "\
+      "Call #{callback_number.blank? ? 'them' : callback_number} if you can't keep it."
+
     phone_number = contact.phone_number
 
     twilio_api_client.send_sms_message(phone_number, message_text)
@@ -50,7 +55,7 @@ class Appointment < ActiveRecord::Base
       unreminded.select do |apt|
         unless user_reminder_advance_times[apt.user_id]
           user_reminder_advance_times[apt.user_id] = 
-            apt.settings.where(key: :reminder_advance_time).first.base_units_normalized_value
+            apt.settings.where(key: Setting::KEYS[:reminder_advance_time]).first.base_units_normalized_value
         end
 
         # time addition is in seconds, the normalized reminder advance time is in minutes

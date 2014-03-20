@@ -50,7 +50,7 @@ describe Appointment do
   describe "#send_reminder" do
     let(:api_client) { double('api_client').as_null_object }
     let(:contact) { mock_model(Contact, id: 1, phone_number: "123-456-7890") }
-    let(:user) { mock_model(User, id: 1) }
+    let(:user) { stub_model(User, id: 1) }
 
     subject do
       Appointment.new(user_id: 1, contact: contact, user: user, start: Time.now)
@@ -95,6 +95,19 @@ describe Appointment do
         subject.reminder_history_entries.should_receive(:create)
         subject.send_reminder
       end
+    
+      context "when a user has a phone number set in their settings" do
+        let(:phone_number) { '555-555-5555' }
+
+        before(:each) do
+          user.settings.create({ key: :phone_number, value: phone_number })
+        end
+        
+        it "should include their phone number in the message", focus: true do
+          api_client.should_receive(:send_sms_message).with(anything, /#{phone_number}/)
+          subject.send_reminder
+        end
+      end
     end
 
     context "when a reminder has already been sent" do
@@ -115,5 +128,6 @@ describe Appointment do
         end
       end
     end
+
   end
 end
