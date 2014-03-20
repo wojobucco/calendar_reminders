@@ -25,7 +25,7 @@ class Appointment < ActiveRecord::Base
     callback_number = phone_number_setting.value unless phone_number_setting.nil?
 
     message_text = "#{contact.name}, this is a reminder for your appt with #{user.name} "\
-      "at #{start.localtime.strftime('%-m/%e/%y, %l:%M %p')}. "\
+      "@ #{start.localtime.strftime('%l:%M %p %-m/%e/%y')}. "\
       "Call #{callback_number.blank? ? 'them' : callback_number} if you can't keep it."
 
     phone_number = contact.phone_number
