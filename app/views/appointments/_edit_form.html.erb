@@ -1,13 +1,15 @@
+<% @now = now_rounded_to_next_hour %>
 <span>Start:</span>
-<input type="time" name="start_time" step="900" value="<%= @appointment ? @appointment.start.to_time.localtime.strftime("%H:%M") : "12:00:00" %>"/>
-<input type="date" name="start_date" value="<%= @appointment ? @appointment.start.localtime.to_date : Date.today.to_s %>"/>
+<input type="time" name="start_time" step="900" value="<%= @appointment ? 
+  @appointment.start.to_time.localtime.strftime("%H:%M") : @now.strftime("%H:%M") %>"/>
+<input type="date" name="start_date" value="<%= @appointment ? @appointment.start.localtime.to_date : @now.to_date.to_s %>"/>
 <br/>
 <span>Duration:</span>
 <input type="number" name="duration" step="15" min="0" max="90" 
   value="<%= @appointment ? ((@appointment.end.to_time - @appointment.start.to_time) / 60).to_i : 60 %>" />
 <span>minutes</span>
 <p>
-  <span>Client:</span>
+  <span>Contact:</span>
   <%= select(:appointment, :contact_id, @contacts.collect { |c| [c.name, c.id] }) if @contacts %>
 </p>
 <br/>
