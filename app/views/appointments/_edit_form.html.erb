@@ -10,6 +10,10 @@
 <span>minutes</span>
 <p>
   <span>Contact:</span>
-  <%= select(:appointment, :contact_id, @contacts.collect { |c| [c.name, c.id] }) if @contacts %>
+  <% if !@contacts.blank? %>
+    <%= select(:appointment, :contact_id, @contacts.collect { |c| [c.name, c.id] }) %>
+  <% else %>
+    <i>No contacts found. Add some to create an appointment.</i>
+  <% end %>
 </p>
 <br/>

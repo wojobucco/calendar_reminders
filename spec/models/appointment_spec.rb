@@ -2,10 +2,12 @@ require 'spec_helper'
 
 describe Appointment do
 
+  let!(:user) { User.create(id: 1, email: 'foo@foo.com', name: 'foo') }
+  let!(:contact) { Contact.create(id: 1, phone_number: '412-444-4444', name: 'bar') }
+
   context "when a user has already created appointments" do
-    let!(:user) { User.create(email: 'foo@foo.com', name: 'foo') }
-    let!(:apt_1) { Appointment.create(user_id: 1, start: 1.month.from_now) }
-    let!(:apt_2) { Appointment.create(user_id: 1, start: 2.month.from_now) }
+    let!(:apt_1) { Appointment.create(user_id: 1, start: 1.month.from_now, end: (1.month.from_now + 1.hour), contact_id: contact.id) }
+    let!(:apt_2) { Appointment.create(user_id: 1, start: 2.month.from_now, end: (2.month.from_now + 1.hour), contact_id: contact.id) }
 
     before(:each) do
       apt_2.reminder_history_entries.create
@@ -18,7 +20,7 @@ describe Appointment do
     end
 
     context "when an appointment has been deleted" do
-      let!(:apt_deleted) { Appointment.create(user_id: 1, start: 2.month.from_now, deleted: true) }
+      let!(:apt_deleted) { Appointment.create(user_id: 1, start: 2.month.from_now, end: (2.month.from_now + 1.hour), contact: contact, deleted: true) }
 
       it "scoped queries should not return deleted appointments" do
         appointments = Appointment.where(user_id: 1)
@@ -33,10 +35,39 @@ describe Appointment do
 
     describe ".unreminded_upcoming" do
       it "should return the unreminded appointments" do
-        Appointment.create(user_id: 1, start: 10.minutes.from_now)
+        Appointment.create(user_id: 1, start: 10.minutes.from_now, end: 1.hour.from_now, contact: contact)
         appointments = Appointment.unreminded_upcoming
         expect(appointments.count).to eq(1)
       end
+    end
+  end
+
+  context "#valid?" do
+    let(:valid_params) { { user_id: 1, start: 10.minutes.from_now, end: 1.hour.from_now, contact_id: 1 } }
+
+    it "should not be valid without a contact" do
+      apt = Appointment.new(valid_params.except(:contact_id))
+      expect(apt).to_not be_valid
+    end
+
+    it "should not be valid without a user" do
+      apt = Appointment.new(valid_params.except(:user_id))
+      expect(apt).to_not be_valid
+    end
+
+    it "should not be valid without a start time" do
+      apt = Appointment.new(valid_params.except(:start))
+      expect(apt).to_not be_valid
+    end
+
+    it "should not be valid without an end time" do
+      apt = Appointment.new(valid_params.except(:end))
+      expect(apt).to_not be_valid
+    end
+
+    it "should be valid with all required fields" do
+      apt = Appointment.new(valid_params)
+      expect(apt).to be_valid
     end
   end
 

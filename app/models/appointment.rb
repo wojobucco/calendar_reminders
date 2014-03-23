@@ -8,6 +8,8 @@ class Appointment < ActiveRecord::Base
   has_many :reminder_history_entries, dependent: :destroy
   has_many :settings, through: :user
 
+  validates_presence_of :user, :contact, :start, :end
+
   default_scope { where(deleted: false) }
 
   scope :upcoming, -> { where("start > ?", Time.now) }

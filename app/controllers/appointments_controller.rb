@@ -30,7 +30,7 @@ class AppointmentsController < ApplicationController
       flash[:success] = "Appointment saved successfully"
       redirect_to appointments_path
     else
-      flash.now[:error] = "There was a problem saving your appointment"
+      flash.now[:error] = "There was a problem saving your appointment:\n #{appointment.errors.full_messages}"
       render :new
     end
   end
@@ -77,8 +77,9 @@ class AppointmentsController < ApplicationController
     begin
       apt_start = Time.parse(start_str)
       apt_end = apt_start + (params[:duration].to_i * 60)
+      contact_id = params[:appointment][:contact_id] if params[:appointment]
 
-      return { start: apt_start, end: apt_end, contact_id: params[:appointment][:contact_id] }
+      return { start: apt_start, end: apt_end, contact_id: contact_id }
     rescue
       return {}
     end

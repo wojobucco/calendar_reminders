@@ -84,12 +84,28 @@ describe AppointmentsController do
         subject.stub(:current_user).and_return(mock_model(User, id: 1))
       end
 
-      it "redirects to the appointments list when the appointment is saved" do
-        Appointment.should_receive(:create).with(start: Time.parse('1/1/2014 12:00:00 PM'), 
-          end: Time.parse('1/1/2014 1:00:00 PM'), contact_id: '1', user_id: 1).and_return(double(Appointment, :persisted? => true))
+      context "with all required parameters supplied" do
 
-        post 'create', valid_params
-        expect(response).to redirect_to(appointments_path)
+        it "redirects to the appointments list when the appointment is saved" do
+          Appointment.should_receive(:create).with(start: Time.parse('1/1/2014 12:00:00 PM'), 
+            end: Time.parse('1/1/2014 1:00:00 PM'), contact_id: '1', user_id: 1).and_return(double(Appointment, :persisted? => true))
+
+          post 'create', valid_params
+          expect(response).to redirect_to(appointments_path)
+        end
+
+      end
+
+      context "without all required parameters supplied" do
+        it "should flash the error message" do
+          post "create", valid_params.except(:appointment)
+          expect(flash.now[:error]).to_not be_nil
+        end
+
+        it "should re-render the create page" do
+          post "create", valid_params.except(:appointment)
+          expect(response).to render_template(:new)
+        end
       end
     end
 
