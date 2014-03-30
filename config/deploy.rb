@@ -20,6 +20,7 @@ set :whenever_command, "bundle exec whenever"
 set :keep_releases, 3
 
 before "deploy:restart", "deploy:upload_secrets"
+after "deploy:update_code", "deploy:cleanup"
 
 namespace :deploy do
   task :start do ; end
