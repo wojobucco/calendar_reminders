@@ -17,6 +17,8 @@ set :rails_env, 'production'
 
 set :whenever_command, "bundle exec whenever"
 
+set :keep_releases, 3
+
 before "deploy:restart", "deploy:upload_secrets"
 
 namespace :deploy do
