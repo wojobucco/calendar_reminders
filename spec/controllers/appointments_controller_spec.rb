@@ -32,6 +32,7 @@ describe AppointmentsController do
 
         context "when the all filter is set" do
           it "gets a list of all appointments for the currently logged in user" do
+            all_appointments.stub(:undeleted).and_return(all_appointments)
             Appointment.should_receive(:where).with(user_id: 1).and_return(all_appointments)
             get('index', { filter: :all })
             expect(assigns(:appointments)).to eq(all_appointments)

@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140317023321) do
+ActiveRecord::Schema.define(version: 20140331015427) do
 
   create_table "appointments", force: true do |t|
     t.integer  "user_id"
     t.datetime "start"
     t.datetime "end"
     t.integer  "contact_id"
-    t.boolean  "deleted"
+    t.boolean  "deleted",    default: false
   end
 
   create_table "contacts", force: true do |t|

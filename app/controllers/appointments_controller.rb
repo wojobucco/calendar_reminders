@@ -7,11 +7,11 @@ class AppointmentsController < ApplicationController
 
     case appt_filter.to_sym
       when :upcoming
-        @appointments = Appointment.where(user_id: current_user.id).upcoming
+        @appointments = Appointment.where(user_id: current_user.id).undeleted.upcoming
       when :past
-        @appointments = Appointment.where(user_id: current_user.id).past
+        @appointments = Appointment.where(user_id: current_user.id).undeleted.past
       when :all
-        @appointments = Appointment.where(user_id: current_user.id)
+        @appointments = Appointment.where(user_id: current_user.id).undeleted
       else
         raise StandardError.new "Unknown appointment filter type #{appt_filter}"
     end 

@@ -22,15 +22,13 @@ describe Appointment do
     context "when an appointment has been deleted" do
       let!(:apt_deleted) { Appointment.create(user_id: 1, start: 2.month.from_now, end: (2.month.from_now + 1.hour), contact: contact, deleted: true) }
 
-      it "scoped queries should not return deleted appointments" do
-        appointments = Appointment.where(user_id: 1)
-        expect(appointments.count).to eq(2)
+      describe ".undeleted" do
+        it "should only return the appointments that haven't been deleted" do
+          appointments = Appointment.where(user_id: 1).undeleted
+          expect(appointments.count).to eq(2)
+        end
       end
 
-      it "unscoped queries should return deleted appointments" do
-        appointments = Appointment.unscoped.where(user_id: 1)
-        expect(appointments.count).to eq(3)
-      end
     end
 
     describe ".unreminded_upcoming" do

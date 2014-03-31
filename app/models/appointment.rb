@@ -10,11 +10,11 @@ class Appointment < ActiveRecord::Base
 
   validates_presence_of :user, :contact, :start, :end
 
-  default_scope { where(deleted: false) }
-
   scope :upcoming, -> { where("start > ?", Time.now) }
   scope :past, -> { where("start < ?", Time.now) }
-  scope :deleted, -> { unscoped.where(deleted: true) }
+
+  scope :undeleted, -> { where(deleted: false) }
+  scope :deleted, -> { where(deleted: true) }
 
   def send_reminder
     if self.reminder_sent?
