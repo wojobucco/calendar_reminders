@@ -1,22 +1,21 @@
 <header>
-  <nav class="navbar navbar-default " role="navigation">
-    <div id="nav-functions" class="navbar-left">
-      <ul class="nav navbar-nav">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Company", "#{root_url}info/about" %></li>
-        <li><%= link_to "Contact", "#{root_url}info/contact" %></li>
-      </ul>
-    </div>
-    <div id="auth" class="navbar-right">
-      <ul class="nav navbar-nav">
-        <% if current_user %>
-          <li><%= link_to "Settings", "#{root_url}settings" %></li> 
-          <li><%= link_to "Profile", "#{root_url}profile" %></li> 
-          <li><%= link_to "Sign out", sessions_destroy_path, { method: 'delete' } %></li>
-        <% else %>
-          <li><%= link_to("Sign in/Register", "#", { "data-toggle" => "modal", "data-target" => "#myModal" }) %></li>
-        <% end %>
-      </ul>
+  <nav id="top-navigation-bar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div id="brand" class="navbar-brand">
+        <span class="glyphicon glyphicon-calendar">
+      </div>
+      <a href="<%= root_url %>" class="navbar-brand">Calendar Reminders</a>
+      <div id="auth" class="navbar-right">
+        <ul class="nav navbar-nav">
+          <% if current_user %>
+            <li><%= link_to "Settings", "#{root_url}settings" %></li> 
+            <li><%= link_to "Profile", "#{root_url}profile" %></li> 
+            <li><%= link_to "Sign out", sessions_destroy_path, { method: 'delete' } %></li>
+          <% else %>
+            <li><%= link_to("Sign in/Register", "#", { "data-toggle" => "modal", "data-target" => "#myModal" }) %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   </nav>
 </header>

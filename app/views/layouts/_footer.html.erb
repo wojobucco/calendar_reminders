@@ -1,6 +1,16 @@
-<footer class="text-center">
-  <small>
-    <p>Calendar Reminders v <%= ::APPLICATION_VERSION %><br/>
-    Copyright &copy; 2013 - <%= Time.now.year %> | Jonathan Worek</p>
-  </small>
+<footer>
+  <div id="footer-functions" class="navbar-fixed-bottom">
+    <div class="navbar navbar-default">
+      <div class="container">
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "Company", "#{root_url}info/about" %></li>
+          <li><%= link_to "Contact", "#{root_url}info/contact" %></li>
+        </ul>
+        <small class="navbar-text navbar-left">
+          Calendar Reminders v <%= ::APPLICATION_VERSION %> |
+          &copy; 2013 - <%= Time.now.year %> Jonathan Worek
+        </small>
+      </div>
+    </div>
+  </div>
 </footer>

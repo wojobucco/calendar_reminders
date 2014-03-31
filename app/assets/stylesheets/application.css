@@ -12,6 +12,15 @@
  *= require_tree .
  */
 
-#sidebar-wrapper a {
-  color: #777
+body { 
+  padding-top: 70px;    /* padding so the body doesn't float under the navbar */
+  padding-bottom: 70px;    /* padding so the body doesn't float under the navbar */
+}
+
+#top-navigation-bar {
+  background-color: #a8d1e7;
+}
+
+.navbar {
+  margin-bottom: 0px;
 }
