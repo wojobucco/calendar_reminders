@@ -32,8 +32,25 @@ describe Appointment do
     end
 
     describe ".unreminded_upcoming" do
-      it "should return the unreminded appointments" do
+      before(:each) do
         Appointment.create(user_id: 1, start: 10.minutes.from_now, end: 1.hour.from_now, contact: contact)
+      end
+
+      it "should return the unreminded appointments" do
+        appointments = Appointment.unreminded_upcoming
+        expect(appointments.count).to eq(1)
+      end
+
+      it "should not return deleted appointments" do
+        Appointment.create(user_id: 1, start: 20.minutes.from_now, end: 1.hour.from_now, contact: contact, deleted: true)
+
+        appointments = Appointment.unreminded_upcoming
+        expect(appointments.count).to eq(1)
+      end
+
+      it "should not return appointments outside the user's reminder advance time" do
+        Appointment.create(user_id: 1, start: 2.hours.from_now, end: 3.hours.from_now, contact: contact)
+
         appointments = Appointment.unreminded_upcoming
         expect(appointments.count).to eq(1)
       end

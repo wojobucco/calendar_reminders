@@ -48,7 +48,8 @@ class Appointment < ActiveRecord::Base
           "SELECT appointments.*, count(reminder_history_entries.id) AS reminder_count "\
           "FROM appointments "\
           "LEFT OUTER JOIN reminder_history_entries "\
-          "ON appointments.id = reminder_history_entries.appointment_id "\
+            "ON appointments.id = reminder_history_entries.appointment_id "\
+          "WHERE appointments.deleted = false "\
           "GROUP BY appointments.id "\
         ") AS apt_reminders "\
         "WHERE reminder_count = 0 AND apt_reminders.start > UTC_TIMESTAMP();")
