@@ -1,7 +1,9 @@
 <h1>Contacts</h1>
 <%= link_to 'New Contact', new_contact_path, class: "pull-right btn btn-default" %>
 <%= form_tag({controller: "contacts", action: "destroy_selected"}, method: "delete") do %>
-  <%= submit_tag 'Delete', class: "btn btn-danger", data: { confirm: 'Are you sure?' } %>
+  <%= submit_tag 'Delete', class: "btn btn-danger", 
+    data: { confirm: "Are you sure you wish to delete the selected contact(s)?\n"\
+      "Any appointments associated with the contact(s) will also be deleted."} %>
   <table class="table table-striped table-bordered">
     <thead>
       <tr>

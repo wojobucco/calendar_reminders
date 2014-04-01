@@ -68,7 +68,7 @@ class ContactsController < ApplicationController
       contact.destroy
     end
 
-    flash[:success] = "Contact(s) deleted"
+    flash[:success] = "Contact(s) deleted" unless selected_contacts.empty?
     redirect_to contacts_url
   end
 
