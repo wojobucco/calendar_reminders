@@ -12,12 +12,6 @@
 <%= render 'layouts/header' 
 %>
 <body class="container">
-  <% if current_user %>
-    <div class="btn-group" >
-      <%= link_to "Appointments", "#{root_url}appointments", class: "btn btn-default" %>
-      <%= link_to "Contacts", "#{root_url}contacts", class: "btn btn-default" %>
-    </div>
-  <% end %>
   <% if !flash.empty? %>
     <% if flash[:success] %>
       <div id="messages_success" class="alert alert-success">

@@ -4,7 +4,16 @@
       <div id="brand" class="navbar-brand">
         <span class="glyphicon glyphicon-calendar">
       </div>
-      <a href="<%= root_url %>" class="navbar-brand">Calendar Reminders</a>
+      <% if current_user %>
+        <div class="navbar-left" >
+          <ul class="nav navbar-nav">
+            <li><%= link_to "Appointments", "#{root_url}appointments" %></li>
+            <li><%= link_to "Contacts", "#{root_url}contacts" %></li>
+          </ul>
+        </div>
+      <% else %>
+        <a href="<%= root_url %>" class="navbar-brand">Calendar Reminders</a>
+      <% end %>
       <div id="auth" class="navbar-right">
         <ul class="nav navbar-nav">
           <% if current_user %>
