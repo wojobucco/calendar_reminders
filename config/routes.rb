@@ -18,6 +18,7 @@ CalendarReminders::Application.routes.draw do
 
   get "info/about"
   get "info/contact"
+  get "info/legal"
   get "info/beta_notice"
 
   get "home/index"

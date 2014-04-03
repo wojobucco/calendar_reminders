@@ -17,6 +17,10 @@ body {
   padding-bottom: 70px;    /* padding so the body doesn't float under the navbar */
 }
 
+.table {
+  margin-top: 20px;
+}
+
 #top-navigation-bar {
   background-color: #a8d1e7;
 }

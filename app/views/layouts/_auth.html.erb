@@ -6,9 +6,14 @@
         <h4 class="modal-title">Sign in or register</h4>
       </div>
       <div class="modal-body">
-        <p>Use your existing Google account to sign in or register. If you don't have one, click 
-          <%= link_to "here", "https://accounts.google.com/SignUp" %> to create one.</p>
+        <p>Use your existing Google account to sign in or register. Click the "Sign in with Google" button to proceed.
+          If you don't have an account, <%= link_to "click here", "https://accounts.google.com/SignUp" %> to create one.</p>
         <%= link_to image_tag('google/Red-signin-Long-base-44dp.png', size: "200x40"), sessions_new_path %>
+        <br/>
+        <br/>
+        <br/>
+        <small>By logging in to the application, you are indicating that you have read and agree to
+          our <%= link_to "legal notice", "#{root_url}info/legal" %>.</small>
       </div>
       <div class="modal-footer">
       </div>
