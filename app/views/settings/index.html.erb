@@ -1,17 +1,16 @@
 <h1>User settings</h1>
-<ul>
-  <!-- todo: need to make this form better handle different settings types, as well
-    as display in the units appropriate for each setting -->
-  <% @settings.each do |setting| %>
-    <li>
-      <%= form_for(setting, remote: true) do |f| %>
+<% @settings.each do |setting| %>
+  <%= form_for(setting, remote: true) do |f| %>
+    <div class="form-group" >
+      <div class="col-md-12">
         <%= f.label setting.key %>
-        <%= f.text_field :value %>
-        <% if [:reminder_advance_time].include?(setting.key.to_sym) %>
-          <%= select_tag(:time_units, options_for_select([:minutes, :hours, :days], setting.units.to_sym)) %>
+        <%= f.text_field :value, class: "form-control" %>
+        <% unless setting.units.nil? %>
+          <%= select_tag("#{setting.key}_units", 
+            options_for_select(Setting::UNITS.keys, setting.units.to_sym), class: "form-control") %>
         <% end %>
-        <%= f.submit %>
-      <% end %>
-    </li>
+      </div>
+      <%= f.submit class: "btn btn-success" %>
+    </div>
   <% end %>
-<ul/>
+<% end %>

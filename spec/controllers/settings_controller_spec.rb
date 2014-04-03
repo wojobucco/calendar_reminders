@@ -30,30 +30,42 @@ describe SettingsController do
     describe "PUT update" do
       context "when the request format is html" do
         it "updates the setting with the received value in minutes" do
-          Setting.should_receive(:update).with('2', value: "60", units: :minutes).and_return(stub_model(Setting, persisted: true))
+          setting = stub_model(Setting, key: :reminder_advance_time, value: "60", units: :minutes, user_id: 1)
+          Setting.stub(:find).with('2').and_return(setting)
 
-          post :update, {id: 2, setting: {value: 60}, time_units: :minutes},
+          setting.should_receive(:update_attributes).with(:value => '60', :units => :minutes)
+
+          post :update, {id: 2, setting: {value: 60}, reminder_advance_time_units: :minutes},
             valid_session
         end
 
         it "updates the setting with the received value in hours" do
-          Setting.should_receive(:update).with('2', value: "60", units: :hours).and_return(stub_model(Setting, persisted: true))
+          setting = stub_model(Setting, key: :reminder_advance_time, value: "10", units: :hours, user_id: 1)
+          Setting.stub(:find).with('2').and_return(setting)
 
-          post :update, {id: 2, setting: {value: 60}, time_units: :hours},
+          setting.should_receive(:update_attributes).with(:value => '10', :units => :hours)
+
+          post :update, {id: 2, setting: {value: 10}, reminder_advance_time_units: :hours},
             valid_session
         end
 
         it "updates the setting with the received value in days" do
-          Setting.should_receive(:update).with('2', value: "60", units: :days).and_return(stub_model(Setting, persisted: true))
+          setting = stub_model(Setting, key: :reminder_advance_time, value: "2", units: :days, user_id: 1)
+          Setting.stub(:find).with('2').and_return(setting)
 
-          post :update, {id: 2, setting: {value: 60}, time_units: :days},
+          setting.should_receive(:update_attributes).with(:value => '2', :units => :days)
+
+          post :update, {id: 2, setting: {value: 2}, reminder_advance_time_units: :days},
             valid_session
         end
 
         it "returns a 400 error if the setting was not saved" do
-          Setting.stub(:update).and_return(stub_model(Setting, persisted?: false))
+          setting = stub_model(Setting, key: :reminder_advance_time, value: "2", units: :days, user_id: 1)
+          Setting.stub(:find).with('2').and_return(setting)
 
-          post :update, {id: 2, setting: {value: 60}, time_units: :days},
+          setting.should_receive(:update_attributes).with(:value => '2', :units => :days).and_return(false)
+
+          post :update, {id: 2, setting: {value: 2}, reminder_advance_time_units: :days},
             valid_session
 
           expect(response.status).to eq(400)
@@ -62,9 +74,12 @@ describe SettingsController do
 
       context "when the request format is json" do
         it "returns a 400 error if the setting was not saved" do
-          Setting.stub(:update).and_return(stub_model(Setting, persisted?: false))
+          setting = stub_model(Setting, key: :reminder_advance_time, value: "2", units: :days, user_id: 1)
+          Setting.stub(:find).with('2').and_return(setting)
 
-          post :update, {format: :json, id: 2, setting: {value: 60}, time_units: :days},
+          setting.should_receive(:update_attributes).with(:value => '2', :units => :days).and_return(false)
+
+          post :update, {format: :json, id: 2, setting: {value: '2'}, reminder_advance_time_units: :days},
             valid_session
 
           expect(response.status).to eq(400)

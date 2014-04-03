@@ -6,13 +6,17 @@ class SettingsController < ApplicationController
   end
 
   def update
-    setting_value = params[:setting][:value]
-    setting_units = params[:time_units].to_sym if params[:time_units]
+    @setting = Setting.find(params[:id])
 
-    @setting = Setting.update(params[:id], value: setting_value, units: setting_units)
+    raise SecurityError.new unless @setting.user_id = current_user.id
+
+    units_param = "#{@setting.key}_units".to_sym
+
+    value = params[:setting][:value]
+    units = params[units_param].to_sym if params[units_param]
 
     respond_to do |format|
-      if @setting.persisted?
+      if @setting.update_attributes(:value => value, :units => units)
         format.html { redirect_to settings_url }
         format.json { render json: @setting }
       else
