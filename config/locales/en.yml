@@ -20,4 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  settings:
+    descriptions:
+      reminder_advance_time: "This is the amount of time before the start of an appointment that a reminder will be sent."
+      phone_number: "This is your contact phone number.  It is used in the reminder message to a contact so they are aware of how to contact you in the event that they need to reschedule an appointment."

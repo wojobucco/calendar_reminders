@@ -1,16 +1,20 @@
 <h1>User settings</h1>
+<div class="col-md-6">
 <% @settings.each do |setting| %>
-  <%= form_for(setting, remote: true) do |f| %>
+  <%= form_for(setting) do |f| %>
     <div class="form-group" >
-      <div class="col-md-12">
-        <%= f.label setting.key %>
+      <%= f.label setting.key %>
+      <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" 
+        data-placement="right" title="<%= t "settings.descriptions.#{setting.key}" %>" ></span>
+      <% unless setting.units.nil? %>
+        <%= f.text_field :value, class: "form-control form-has-units" %>
+        <%= select_tag("#{setting.key}_units", 
+          options_for_select(Setting::UNITS.keys, setting.units.to_sym), class: "form-control form-units") %>
+      <% else %>
         <%= f.text_field :value, class: "form-control" %>
-        <% unless setting.units.nil? %>
-          <%= select_tag("#{setting.key}_units", 
-            options_for_select(Setting::UNITS.keys, setting.units.to_sym), class: "form-control") %>
-        <% end %>
-      </div>
-      <%= f.submit class: "btn btn-success" %>
+      <% end %>
     </div>
+    <%= f.submit class: "btn btn-success" %>
   <% end %>
 <% end %>
+</div>
