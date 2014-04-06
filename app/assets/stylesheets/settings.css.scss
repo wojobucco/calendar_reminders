@@ -1,3 +1,20 @@
 // Place all the styles related to the settings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.form-units {
+  width: 20%;
+}
+
+.form-has-units {
+  width: 80%;
+  float: left;
+}
+
+.edit_setting {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}

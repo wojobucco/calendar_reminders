@@ -17,10 +17,18 @@ class SettingsController < ApplicationController
 
     respond_to do |format|
       if @setting.update_attributes(:value => value, :units => units)
-        format.html { redirect_to settings_url }
+        format.html do 
+          flash[:success] = "#{@setting.key.humanize} was updated sucessfully."
+          redirect_to settings_url
+        end
+
         format.json { render json: @setting }
       else
-        format.html { render nothing: true, status: :bad_request }
+        format.html do
+          flash[:error] = "#{@setting.key.humanize} was not updated sucessfully."
+          redirect_to settings_url
+        end
+
         format.json do
           render json: { errors: @setting.errors.full_messages }, status: :bad_request
         end

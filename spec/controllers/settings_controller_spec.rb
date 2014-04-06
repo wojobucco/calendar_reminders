@@ -59,7 +59,19 @@ describe SettingsController do
             valid_session
         end
 
-        it "returns a 400 error if the setting was not saved" do
+        it "flashes success if the setting was saved" do
+          setting = stub_model(Setting, key: :reminder_advance_time, value: "2", units: :days, user_id: 1)
+          Setting.stub(:find).with('2').and_return(setting)
+
+          setting.should_receive(:update_attributes).with(:value => '2', :units => :days).and_return(true)
+
+          post :update, {id: 2, setting: {value: 2}, reminder_advance_time_units: :days},
+            valid_session
+
+          expect(flash[:success]).to_not be_nil
+        end
+
+        it "flashes an error if the setting was not saved" do
           setting = stub_model(Setting, key: :reminder_advance_time, value: "2", units: :days, user_id: 1)
           Setting.stub(:find).with('2').and_return(setting)
 
@@ -68,7 +80,7 @@ describe SettingsController do
           post :update, {id: 2, setting: {value: 2}, reminder_advance_time_units: :days},
             valid_session
 
-          expect(response.status).to eq(400)
+          expect(flash[:error]).to_not be_nil
         end
       end
 
