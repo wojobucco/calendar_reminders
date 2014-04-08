@@ -5,7 +5,7 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = Contact.where(user_id: current_user.id)
+    @contacts = Contact.undeleted.where(user_id: current_user.id)
   end
 
   # GET /contacts/1
@@ -55,7 +55,7 @@ class ContactsController < ApplicationController
   # DELETE /contacts/1
   # DELETE /contacts/1.json
   def destroy
-    @contact.destroy
+    @contact.delete
     respond_to do |format|
       format.html { redirect_to contacts_url }
       format.json { head :no_content }
@@ -65,7 +65,7 @@ class ContactsController < ApplicationController
   def destroy_selected
     selected_contacts.each do |id|
       contact = Contact.find(id)
-      contact.destroy
+      contact.delete
     end
 
     flash[:success] = "Contact(s) deleted" unless selected_contacts.empty?

@@ -18,7 +18,7 @@ class AppointmentsController < ApplicationController
   end
 
   def new
-    @contacts = Contact.where(user_id: current_user.id)
+    @contacts = Contact.undeleted.where(user_id: current_user.id)
   end
 
   def create
@@ -54,13 +54,13 @@ class AppointmentsController < ApplicationController
 
   def edit
     @appointment = Appointment.find(params[:id].to_i)
-    @contacts = Contact.all.where(user_id: current_user.id)
+    @contacts = Contact.undeleted.where(user_id: current_user.id)
   end
 
   def destroy
     apt = Appointment.find(params[:id])
 
-    if (apt.update(deleted: true))
+    if (apt.delete)
       flash[:success] = "Appointment deleted successfully"
     else
       flash[:error] = "Appointment was not deleted succesfully"

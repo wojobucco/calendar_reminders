@@ -129,7 +129,7 @@ describe AppointmentsController do
 
       it "does a soft delete of the appointment" do
         apt = stub_model(Appointment, id: 1)
-        apt.should_receive(:update).with(deleted: true)
+        apt.should_receive(:delete)
         Appointment.stub(:find).and_return(apt)
 
         delete 'destroy', id: 1

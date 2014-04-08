@@ -16,6 +16,10 @@ class Appointment < ActiveRecord::Base
   scope :undeleted, -> { where(deleted: false) }
   scope :deleted, -> { where(deleted: true) }
 
+  def delete
+    self.update_attributes(:deleted => true)
+  end
+
   def send_reminder
     if self.reminder_sent?
       raise StandardError.new "Cannot send reminder. A reminder was already sent for this appointment."

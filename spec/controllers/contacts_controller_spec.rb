@@ -122,11 +122,12 @@ describe ContactsController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested contact" do
+    it "soft deletes the requested contact" do
       contact = Contact.create! valid_attributes
-      expect {
-        delete :destroy, {:id => contact.to_param}, valid_session
-      }.to change(Contact, :count).by(-1)
+      delete :destroy, {:id => contact.to_param}, valid_session
+      
+      contact.reload
+      expect(contact.deleted).to be_true
     end
 
     it "redirects to the contacts list" do
