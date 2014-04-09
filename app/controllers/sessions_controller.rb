@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
         code: params[:code])
       result = client.get_user_info
 
-      unless is_beta_user?(result.data.email)
+      if GlobalSetting::BETA_MODE_ENABLED && !is_beta_user?(result.data.email)
         redirect_to info_beta_notice_path
         return
       end
